@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Triggerfish — Merch</title>
-  <link rel="stylesheet" href="stylesheet.css"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="stylesheet.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Roboto+Mono:wght@300;400&display=swap"
+    rel="stylesheet" />
 </head>
+
 <body>
 
   <nav class="nav" id="nav">
     <a href="#home" class="nav__brand">
-      <img src="logo.png" alt="Triggerfish" class="nav__logo"/>
+      <img src="logo.png" alt="Triggerfish" class="nav__logo" />
       <span class="nav__name">TRIGGERFISH</span>
     </a>
     <ul class="nav__links">
@@ -67,7 +71,7 @@
   <footer class="footer">
     <div class="footer__inner">
       <div class="footer__brand">
-        <img src="logo.png" alt="Triggerfish" class="footer__logo"/>
+        <img src="logo.png" alt="Triggerfish" class="footer__logo" />
         <span class="footer__name">TRIGGERFISH</span>
       </div>
       <div class="footer__links">
@@ -88,7 +92,7 @@
       <button class="xcard__close" id="xcardClose" aria-label="Close">✕</button>
       <div class="xcard__gallery">
         <div class="xcard__img-main">
-          <img id="xcardMainImg" src="" alt=""/>
+          <img id="xcardMainImg" src="" alt="" />
         </div>
         <div class="xcard__thumbs" id="xcardThumbs"></div>
       </div>
@@ -103,8 +107,7 @@
           <li>— Vibrant, durable print</li>
           <li>— Ships worldwide via Printful</li>
         </ul>
-        <a class="btn btn--primary btn--full xcard__buy" id="xcardBuy"
-           href="#" target="_blank" rel="noopener">
+        <a class="btn btn--primary btn--full xcard__buy" id="xcardBuy" href="#" target="_blank" rel="noopener">
           Buy This Shirt →
         </a>
         <p class="xcard__note">Secure checkout on Printful</p>
@@ -114,282 +117,306 @@
 
   <script>
 
-  /* ╔══════════════════════════════════════════════════════════════╗
-     ║  SERIES — add a new collection here                         ║
-     ║                                                              ║
-     ║  "your-key": {                                               ║
-     ║    label: "Display Name",                                    ║
-     ║    desc:  "Short line shown under the tab.",                 ║
-     ║  },                                                          ║
-     ╚══════════════════════════════════════════════════════════════╝ */
+    /* ╔══════════════════════════════════════════════════════════════╗
+       ║  SERIES — add a new collection here                         ║
+       ║                                                              ║
+       ║  "your-key": {                                               ║
+       ║    label: "Display Name",                                    ║
+       ║    desc:  "Short line shown under the tab.",                 ║
+       ║  },                                                          ║
+       ╚══════════════════════════════════════════════════════════════╝ */
 
-  const SERIES = {
-    "pixel": {
-      label: "Pixel Series",
-      desc:  "Six original designs. Bold color, raw texture, a pixel lens.",
-    },
+    const SERIES = {
+      "pixel": {
+        label: "Pixel Series",
+        desc: "Six original designs. Bold color, raw texture, a pixel lens.",
+      },
 
-    // ── ADD NEW SERIES HERE ──────────────────────────────────────
-    // "galaxy": {
-    //   label: "Galaxy Series",
-    //   desc:  "Cosmic drops. Deep space aesthetics on premium cotton.",
-    // },
-    // ────────────────────────────────────────────────────────────
-  };
-
-
-  /* ╔══════════════════════════════════════════════════════════════╗
-     ║  PRODUCTS — your shirts                                      ║
-     ║                                                              ║
-     ║  HOW TO ADD IMAGES:                                          ║
-     ║  Put your PNGs in the shirt folder, then list them in        ║
-     ║  the imgs: [ ] array exactly as they are named.             ║
-     ║                                                              ║
-     ║  Example — if your folder looks like this:                   ║
-     ║    shirts/canopy/front.png                                   ║
-     ║    shirts/canopy/back.png                                    ║
-     ║    shirts/canopy/detail.png                                  ║
-     ║                                                              ║
-     ║  Then write:                                                 ║
-     ║    imgs: [                                                    ║
-     ║      "shirts/canopy/front.png",                              ║
-     ║      "shirts/canopy/back.png",                               ║
-     ║      "shirts/canopy/detail.png",                             ║
-     ║    ],                                                         ║
-     ║                                                              ║
-     ║  The FIRST image in the list shows on the grid card.         ║
-     ║  All images show in the gallery when the card is opened.     ║
-     ║                                                              ║
-     ║  HOW TO ADD A NEW SHIRT:                                     ║
-     ║  Copy any block below, paste it before the ]; at the end,    ║
-     ║  and fill in your details.                                   ║
-     ╚══════════════════════════════════════════════════════════════╝ */
-
-  const PRODUCTS = [
-
-    {
-      id:     "logo",
-      series: "pixel",
-      name:   "Logo Tee",
-      price:  "$34.00",
-      desc:   "The OG. Classic Triggerfish logo on heavyweight cotton. Clean, bold, unmistakable.",
-      url:    "https://www.printful.com/product-template/100310621/9ed1bc1303170ed5df844015265ce752",
-      imgs: [
-        // List your image filenames here — exact name including extension
-        // "shirts/logo/front.png",
-        // "shirts/logo/back.png",
-      ],
-    },
-
-    {
-      id:     "canopy",
-      series: "pixel",
-      name:   "Canopy",
-      price:  "$34.00",
-      desc:   "Deep greens and organic forms translated into pixel art. The forest, distilled.",
-      url:    "https://www.printful.com/product-template/100310613/73c2a6a997cc5d9c240cc76da424b80b",
-      imgs: [
-        // "shirts/canopy/front.png",
-        // "shirts/canopy/back.png",
-      ],
-    },
-
-    {
-      id:     "ember-1",
-      series: "pixel",
-      name:   "Ember I",
-      price:  "$34.00",
-      desc:   "Where the fire started. Controlled chaos rendered pixel-by-pixel. Raw, direct, unforgettable.",
-      url:    "https://www.printful.com/product-template/100310458/4b04618a058f38d36857448641871e7f",
-      imgs: [
-        // "shirts/ember-1/front.png",
-        // "shirts/ember-1/back.png",
-      ],
-    },
-
-    {
-      id:     "ember-2",
-      series: "pixel",
-      name:   "Ember II",
-      price:  "$34.00",
-      desc:   "The second chapter of fire. Warmer, louder, more alive.",
-      url:    "https://www.printful.com/product-template/100310501/0bdeac20259e62cdeed05572cdf30508",
-      imgs: [
-        // "shirts/ember-2/front.png",
-        // "shirts/ember-2/back.png",
-      ],
-    },
-
-    {
-      id:     "wild-static",
-      series: "pixel",
-      name:   "Wild Static",
-      price:  "$34.00",
-      desc:   "Chaotic energy. Maximum impact. A pixel explosion of color and movement.",
-      url:    "https://www.printful.com/product-template/100310444/146bbbad94aff8f228aab4050f343768",
-      imgs: [
-        // "shirts/wild-static/front.png",
-        // "shirts/wild-static/back.png",
-      ],
-    },
-
-    {
-      id:     "bananas",
-      series: "pixel",
-      name:   "Going Bananas",
-      price:  "$34.00",
-      desc:   "Fresh off the press. The wildest drop in the Pixel Series.",
-      url:    "https://www.printful.com/product-template/100312007/fd40176433e8c7ac790ca1785ade32fd",
-      imgs: [
-        // "shirts/bananas/front.png",
-        // "shirts/bananas/back.png",
-      ],
-    },
-
-    // ── ADD NEW SHIRTS ABOVE THIS LINE ──────────────────────────
-    // {
-    //   id:     "my-new-shirt",        ← folder name inside shirts/
-    //   series: "pixel",               ← must match a key in SERIES
-    //   name:   "My New Shirt",
-    //   price:  "$34.00",
-    //   desc:   "Description here.",
-    //   url:    "https://www.printful.com/...",
-    //   imgs: [
-    //     "shirts/my-new-shirt/front.png",
-    //     "shirts/my-new-shirt/back.png",
-    //   ],
-    // },
-    // ────────────────────────────────────────────────────────────
-
-  ];
+      // ── ADD NEW SERIES HERE ──────────────────────────────────────
+      // "galaxy": {
+      //   label: "Galaxy Series",
+      //   desc:  "Cosmic drops. Deep space aesthetics on premium cotton.",
+      // },
+      // ────────────────────────────────────────────────────────────
+    };
 
 
-  /* ════════════════════════════════════════════════════════════════
-     EVERYTHING BELOW THIS LINE RUNS THE SITE — DO NOT EDIT
-  ════════════════════════════════════════════════════════════════ */
+    /* ╔══════════════════════════════════════════════════════════════╗
+       ║  PRODUCTS — your shirts                                      ║
+       ║                                                              ║
+       ║  HOW TO ADD IMAGES:                                          ║
+       ║  Put your PNGs in the shirt folder, then list them in        ║
+       ║  the imgs: [ ] array exactly as they are named.             ║
+       ║                                                              ║
+       ║  Example — if your folder looks like this:                   ║
+       ║    shirts/canopy/front.png                                   ║
+       ║    shirts/canopy/back.png                                    ║
+       ║    shirts/canopy/detail.png                                  ║
+       ║                                                              ║
+       ║  Then write:                                                 ║
+       ║    imgs: [                                                    ║
+       ║      "shirts/canopy/front.png",                              ║
+       ║      "shirts/canopy/back.png",                               ║
+       ║      "shirts/canopy/detail.png",                             ║
+       ║    ],                                                         ║
+       ║                                                              ║
+       ║  The FIRST image in the list shows on the grid card.         ║
+       ║  All images show in the gallery when the card is opened.     ║
+       ║                                                              ║
+       ║  HOW TO ADD A NEW SHIRT:                                     ║
+       ║  Copy any block below, paste it before the ]; at the end,    ║
+       ║  and fill in your details.                                   ║
+       ╚══════════════════════════════════════════════════════════════╝ */
 
-  // Build tabs from SERIES that actually have products
-  function buildTabs() {
-    const used   = [...new Set(PRODUCTS.map(p => p.series))];
-    const tabsEl = document.getElementById("seriesTabs");
-    let html = `<button class="stab active" data-series="all">All</button>`;
-    used.forEach(key => {
-      if (SERIES[key]) {
-        html += `<button class="stab" data-series="${key}">
+    const PRODUCTS = [
+
+      {
+        id: "logo",
+        series: "pixel",
+        name: "Logo Tee",
+        price: "$34.00",
+        desc: "The OG. Classic Triggerfish logo on heavyweight cotton. Clean, bold, unmistakable.",
+        url: "https://www.printful.com/product-template/100310621/9ed1bc1303170ed5df844015265ce752",
+        imgs: [
+          "Shirts/archive/Shirt 1.png",
+          "Shirts/archive/Shirt 2.png",
+        ],
+      },
+
+      {
+        id: "canopy",
+        series: "pixel",
+        name: "Bush",
+        price: "$34.00",
+        desc: "Bush",
+        url: "https://www.printful.com/product-template/100310613/73c2a6a997cc5d9c240cc76da424b80b",
+        imgs: [
+          "Shirts/Bush/Shirt 1.png",
+          "Shirts/Bush/Shirt 2.png",
+          "Shirts/Bush/Shirt 3.png",
+          "Shirts/Bush/Shirt 4.png",
+          "Shirts/Bush/Shirt 5.png",
+          "Shirts/Bush/Shirt 6.png",
+          "Shirts/Bush/Shirt 7.png",
+          "Shirts/Bush/Shirt 8.png",
+          "Shirts/Bush/Shirt 9.png",
+        ],
+      },
+
+      {
+        id: "ember-1",
+        series: "pixel",
+        name: "Ember I",
+        price: "$34.00",
+        desc: "Where the fire started. Controlled chaos rendered pixel-by-pixel. Raw, direct, unforgettable.",
+        url: "https://www.printful.com/product-template/100310458/4b04618a058f38d36857448641871e7f",
+        imgs: [
+          "Shirts/Ember/Shirt 1.png",
+          "Shirts/Ember/Shirt 2.png",
+          "Shirts/Ember/Shirt 3.png",
+          "Shirts/Ember/Shirt 4.png",
+          "Shirts/Ember/Shirt 5.png",
+        ],
+      },
+
+      {
+        id: "ember-2",
+        series: "pixel",
+        name: "Ember II",
+        price: "$34.00",
+        desc: "The second chapter of fire. Warmer, louder, more alive.",
+        url: "https://www.printful.com/product-template/100310501/0bdeac20259e62cdeed05572cdf30508",
+        imgs: [
+          "Shirts/ChaCha/Shirt 1.png", 
+          "Shirts/ChaCha/Shirt 2.png", 
+          "Shirts/ChaCha/Shirt 3.png", 
+          "Shirts/ChaCha/Shirt 4.png", 
+          "Shirts/ChaCha/Shirt 5.png", 
+          "Shirts/ChaCha/Shirt 6.png", 
+          "Shirts/ChaCha/Shirt 7.png",
+        ],
+      },
+
+      {
+        id: "wild-static",
+        series: "pixel",
+        name: "Wild Static",
+        price: "$34.00",
+        desc: "Chaotic energy. Maximum impact. A pixel explosion of color and movement.",
+        url: "https://www.printful.com/product-template/100310444/146bbbad94aff8f228aab4050f343768",
+        imgs: [
+          "Shirts/Tree/Shirt 1.png",
+"Shirts/Tree/Shirt 2.png",
+"Shirts/Tree/Shirt 3.png",
+"Shirts/Tree/Shirt 4.png",
+"Shirts/Tree/Shirt 5.png",
+"Shirts/Tree/Shirt 6.png",
+"Shirts/Tree/Shirt 7.png",
+"Shirts/Tree/Shirt 8.png",
+        ],
+      },
+
+      {
+        id: "bananas",
+        series: "pixel",
+        name: "Going Bananas",
+        price: "$34.00",
+        desc: "Fresh off the press. The wildest drop in the Pixel Series.",
+        url: "https://www.printful.com/product-template/100312007/fd40176433e8c7ac790ca1785ade32fd",
+        imgs: [
+          "Shirts/Bananas/Shirt 1.png",
+"Shirts/Bananas/Shirt 2.png",
+"Shirts/Bananas/Shirt 3.png",
+"Shirts/Bananas/Shirt 4.png",
+"Shirts/Bananas/Shirt 5.png",
+"Shirts/Bananas/Shirt 6.png",
+        ],
+      },
+
+      // ── ADD NEW SHIRTS ABOVE THIS LINE ──────────────────────────
+      // {
+      //   id:     "my-new-shirt",        ← folder name inside shirts/
+      //   series: "pixel",               ← must match a key in SERIES
+      //   name:   "My New Shirt",
+      //   price:  "$34.00",
+      //   desc:   "Description here.",
+      //   url:    "https://www.printful.com/...",
+      //   imgs: [
+      //     "shirts/my-new-shirt/front.png",
+      //     "shirts/my-new-shirt/back.png",
+      //   ],
+      // },
+      // ────────────────────────────────────────────────────────────
+
+    ];
+
+
+    /* ════════════════════════════════════════════════════════════════
+       EVERYTHING BELOW THIS LINE RUNS THE SITE — DO NOT EDIT
+    ════════════════════════════════════════════════════════════════ */
+
+    // Build tabs from SERIES that actually have products
+    function buildTabs() {
+      const used = [...new Set(PRODUCTS.map(p => p.series))];
+      const tabsEl = document.getElementById("seriesTabs");
+      let html = `<button class="stab active" data-series="all">All</button>`;
+      used.forEach(key => {
+        if (SERIES[key]) {
+          html += `<button class="stab" data-series="${key}">
           <span class="stab__dot"></span>${SERIES[key].label}
         </button>`;
-      }
-    });
-    tabsEl.innerHTML = html;
-    tabsEl.addEventListener("click", e => {
-      const t = e.target.closest(".stab");
-      if (!t) return;
-      document.querySelectorAll(".stab").forEach(s => s.classList.remove("active"));
-      t.classList.add("active");
-      active = t.dataset.series;
-      renderGrid();
-    });
-  }
-
-
-  /* ── Fish Tank ──────────────────────────────────────────────── */
-  (function initTank() {
-    const tank = document.getElementById("tank");
-    const DEPTHS = [
-      { scale: 0.15, opacity: 0.08, speed: 58, blur: 4   },
-      { scale: 0.28, opacity: 0.13, speed: 44, blur: 2.5 },
-      { scale: 0.50, opacity: 0.20, speed: 32, blur: 1.5 },
-      { scale: 0.78, opacity: 0.28, speed: 22, blur: 0.5 },
-      { scale: 1.10, opacity: 0.38, speed: 14, blur: 0   },
-      { scale: 1.55, opacity: 0.50, speed: 9,  blur: 0   },
-    ];
-    function pickDepth() {
-      const r = Math.random();
-      if (r < 0.12) return DEPTHS[5];
-      if (r < 0.22) return DEPTHS[0];
-      return DEPTHS[Math.floor(Math.random() * DEPTHS.length)];
-    }
-    const fish = document.createElement("img");
-    fish.src = "Logo-straight.png"; fish.alt = ""; fish.className = "tank__fish";
-    tank.appendChild(fish);
-    const BASE_W = 240;
-    let goingRight = Math.random() > 0.5;
-    function swim() {
-      const d = pickDepth(), heroW = tank.offsetWidth;
-      const w = Math.round(BASE_W * d.scale), dur = d.speed * 1000;
-      const yPct = 8 + Math.random() * 78;
-      const yDrift = (Math.random() - 0.5) * 12;
-      const startX = goingRight ? -w - 20 : heroW + 20;
-      const endX   = goingRight ? heroW + 20 : -w - 20;
-      fish.style.cssText = `width:${w}px;opacity:${d.opacity};top:${yPct}%;left:${startX}px;filter:invert(1) brightness(0.65) sepia(1) hue-rotate(60deg) saturate(2) blur(${d.blur}px);transform:scaleX(${goingRight?1:-1});transition:none;`;
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        fish.style.transition = `left ${dur}ms linear,top ${dur*.6}ms ease-in-out,opacity 1400ms ease,width 1400ms ease,filter 1400ms ease`;
-        fish.style.left = endX + "px";
-        fish.style.top  = `${Math.min(Math.max(yPct + yDrift, 5), 90)}%`;
-      }));
-      setTimeout(() => { goingRight = !goingRight; swim(); }, dur + 400);
-    }
-    setTimeout(swim, 500);
-
-    const caustics = document.getElementById("caustics");
-    for (let i = 0; i < 9; i++) {
-      const c = document.createElement("div");
-      c.className = "caustic";
-      const sz = 70 + Math.random() * 220;
-      c.style.cssText = `width:${sz}px;height:${sz*.42}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*9}s;animation-duration:${7+Math.random()*7}s;`;
-      caustics.appendChild(c);
-    }
-
-    const heroContent = document.getElementById("heroContent");
-    let tx=0,ty=0,cx=0,cy=0;
-    const heroEl = document.getElementById("home");
-    heroEl.addEventListener("mousemove", e => {
-      const r=e.currentTarget.getBoundingClientRect();
-      tx=(e.clientX-r.left)/r.width-.5; ty=(e.clientY-r.top)/r.height-.5;
-    });
-    heroEl.addEventListener("mouseleave",()=>{tx=0;ty=0;});
-    if(window.DeviceOrientationEvent){
-      window.addEventListener("deviceorientation",e=>{
-        if(e.gamma!==null){tx=Math.max(-.5,Math.min(.5,e.gamma/30));ty=Math.max(-.5,Math.min(.5,(e.beta-45)/30));}
+        }
+      });
+      tabsEl.innerHTML = html;
+      tabsEl.addEventListener("click", e => {
+        const t = e.target.closest(".stab");
+        if (!t) return;
+        document.querySelectorAll(".stab").forEach(s => s.classList.remove("active"));
+        t.classList.add("active");
+        active = t.dataset.series;
+        renderGrid();
       });
     }
-    (function lerp(){
-      const ease=0.055; cx+=(tx-cx)*ease; cy+=(ty-cy)*ease;
-      tank.style.transform=`translate(${cx*-30}px,${cy*-15}px)`;
-      heroContent.style.transform=`translate(${cx*10}px,${cy*6}px)`;
-      requestAnimationFrame(lerp);
+
+
+    /* ── Fish Tank ──────────────────────────────────────────────── */
+    (function initTank() {
+      const tank = document.getElementById("tank");
+      const DEPTHS = [
+        { scale: 0.15, opacity: 0.08, speed: 58, blur: 4 },
+        { scale: 0.28, opacity: 0.13, speed: 44, blur: 2.5 },
+        { scale: 0.50, opacity: 0.20, speed: 32, blur: 1.5 },
+        { scale: 0.78, opacity: 0.28, speed: 22, blur: 0.5 },
+        { scale: 1.10, opacity: 0.38, speed: 14, blur: 0 },
+        { scale: 1.55, opacity: 0.50, speed: 9, blur: 0 },
+      ];
+      function pickDepth() {
+        const r = Math.random();
+        if (r < 0.12) return DEPTHS[5];
+        if (r < 0.22) return DEPTHS[0];
+        return DEPTHS[Math.floor(Math.random() * DEPTHS.length)];
+      }
+      const fish = document.createElement("img");
+      fish.src = "Logo-straight.png"; fish.alt = ""; fish.className = "tank__fish";
+      tank.appendChild(fish);
+      const BASE_W = 240;
+      let goingRight = Math.random() > 0.5;
+      function swim() {
+        const d = pickDepth(), heroW = tank.offsetWidth;
+        const w = Math.round(BASE_W * d.scale), dur = d.speed * 1000;
+        const yPct = 8 + Math.random() * 78;
+        const yDrift = (Math.random() - 0.5) * 12;
+        const startX = goingRight ? -w - 20 : heroW + 20;
+        const endX = goingRight ? heroW + 20 : -w - 20;
+        fish.style.cssText = `width:${w}px;opacity:${d.opacity};top:${yPct}%;left:${startX}px;filter:invert(1) brightness(0.65) sepia(1) hue-rotate(60deg) saturate(2) blur(${d.blur}px);transform:scaleX(${goingRight ? 1 : -1});transition:none;`;
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          fish.style.transition = `left ${dur}ms linear,top ${dur * .6}ms ease-in-out,opacity 1400ms ease,width 1400ms ease,filter 1400ms ease`;
+          fish.style.left = endX + "px";
+          fish.style.top = `${Math.min(Math.max(yPct + yDrift, 5), 90)}%`;
+        }));
+        setTimeout(() => { goingRight = !goingRight; swim(); }, dur + 400);
+      }
+      setTimeout(swim, 500);
+
+      const caustics = document.getElementById("caustics");
+      for (let i = 0; i < 9; i++) {
+        const c = document.createElement("div");
+        c.className = "caustic";
+        const sz = 70 + Math.random() * 220;
+        c.style.cssText = `width:${sz}px;height:${sz * .42}px;left:${Math.random() * 100}%;top:${Math.random() * 100}%;animation-delay:${Math.random() * 9}s;animation-duration:${7 + Math.random() * 7}s;`;
+        caustics.appendChild(c);
+      }
+
+      const heroContent = document.getElementById("heroContent");
+      let tx = 0, ty = 0, cx = 0, cy = 0;
+      const heroEl = document.getElementById("home");
+      heroEl.addEventListener("mousemove", e => {
+        const r = e.currentTarget.getBoundingClientRect();
+        tx = (e.clientX - r.left) / r.width - .5; ty = (e.clientY - r.top) / r.height - .5;
+      });
+      heroEl.addEventListener("mouseleave", () => { tx = 0; ty = 0; });
+      if (window.DeviceOrientationEvent) {
+        window.addEventListener("deviceorientation", e => {
+          if (e.gamma !== null) { tx = Math.max(-.5, Math.min(.5, e.gamma / 30)); ty = Math.max(-.5, Math.min(.5, (e.beta - 45) / 30)); }
+        });
+      }
+      (function lerp() {
+        const ease = 0.055; cx += (tx - cx) * ease; cy += (ty - cy) * ease;
+        tank.style.transform = `translate(${cx * -30}px,${cy * -15}px)`;
+        heroContent.style.transform = `translate(${cx * 10}px,${cy * 6}px)`;
+        requestAnimationFrame(lerp);
+      })();
     })();
-  })();
 
 
-  /* ── Grid ───────────────────────────────────────────────────── */
-  let active = "all";
+    /* ── Grid ───────────────────────────────────────────────────── */
+    let active = "all";
 
-  function filtered() {
-    return active === "all" ? PRODUCTS : PRODUCTS.filter(p => p.series === active);
-  }
+    function filtered() {
+      return active === "all" ? PRODUCTS : PRODUCTS.filter(p => p.series === active);
+    }
 
-  function renderGrid() {
-    const g        = document.getElementById("grid");
-    const products = filtered();
-    const info     = active === "all"
-      ? { label: "All Products", desc: "Everything in the store." }
-      : (SERIES[active] || { label: active, desc: "" });
+    function renderGrid() {
+      const g = document.getElementById("grid");
+      const products = filtered();
+      const info = active === "all"
+        ? { label: "All Products", desc: "Everything in the store." }
+        : (SERIES[active] || { label: active, desc: "" });
 
-    document.getElementById("stripName").textContent  = info.label;
-    document.getElementById("stripDesc").textContent  = info.desc;
-    document.getElementById("stripCount").textContent = products.length;
+      document.getElementById("stripName").textContent = info.label;
+      document.getElementById("stripDesc").textContent = info.desc;
+      document.getElementById("stripCount").textContent = products.length;
 
-    g.innerHTML = "";
+      g.innerHTML = "";
 
-    products.forEach((p, i) => {
-      const imgs     = p.imgs ? p.imgs.filter(Boolean) : [];
-      const coverSrc = imgs.length ? imgs[0] : "";
+      products.forEach((p, i) => {
+        const imgs = p.imgs ? p.imgs.filter(Boolean) : [];
+        const coverSrc = imgs.length ? imgs[0] : "";
 
-      const card = document.createElement("div");
-      card.className = "card";
-      card.style.animationDelay = `${i * 0.07}s`;
-      card.innerHTML = `
+        const card = document.createElement("div");
+        card.className = "card";
+        card.style.animationDelay = `${i * 0.07}s`;
+        card.innerHTML = `
         <div class="card__img">
           ${coverSrc
             ? `<img src="${coverSrc}" alt="${p.name}" loading="lazy"
@@ -407,94 +434,95 @@
           </div>
         </div>`;
 
-      // Show missing state if no images listed
-      if (!coverSrc) {
-        card.querySelector(".card__img").classList.add("card__img--missing");
-      }
+        // Show missing state if no images listed
+        if (!coverSrc) {
+          card.querySelector(".card__img").classList.add("card__img--missing");
+        }
 
-      card.addEventListener("click", () => openXCard(p, imgs));
-      g.appendChild(card);
-    });
-  }
-
-
-  /* ── Expanded Card ──────────────────────────────────────────── */
-  let currentImgs = [], currentImgIndex = 0;
-
-  function openXCard(p, imgs) {
-    currentImgs = imgs || []; currentImgIndex = 0;
-    document.getElementById("xcardName").textContent   = p.name;
-    document.getElementById("xcardPrice").textContent  = p.price;
-    document.getElementById("xcardDesc").textContent   = p.desc;
-    document.getElementById("xcardSeries").textContent = SERIES[p.series] ? SERIES[p.series].label : p.series;
-    document.getElementById("xcardBuy").href           = p.url;
-    setMainImg(0);
-
-    const thumbsEl = document.getElementById("xcardThumbs");
-    thumbsEl.innerHTML = "";
-    if (currentImgs.length > 1) {
-      thumbsEl.style.display = "flex";
-      currentImgs.forEach((src, idx) => {
-        const t = document.createElement("div");
-        t.className = "xcard__thumb" + (idx === 0 ? " active" : "");
-        t.innerHTML = `<img src="${src}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"/>`;
-        t.addEventListener("click", e => { e.stopPropagation(); setMainImg(idx); });
-        thumbsEl.appendChild(t);
+        card.addEventListener("click", () => openXCard(p, imgs));
+        g.appendChild(card);
       });
-    } else {
-      thumbsEl.style.display = "none";
     }
 
-    document.getElementById("xcardBg").classList.add("open");
-    document.body.style.overflow = "hidden";
-  }
 
-  function setMainImg(idx) {
-    currentImgIndex = idx;
-    const el = document.getElementById("xcardMainImg");
-    el.style.opacity = "0";
-    setTimeout(() => { el.src = currentImgs[idx] || ""; el.style.opacity = "1"; }, 150);
-    document.querySelectorAll(".xcard__thumb").forEach((t,i) => t.classList.toggle("active", i===idx));
-  }
+    /* ── Expanded Card ──────────────────────────────────────────── */
+    let currentImgs = [], currentImgIndex = 0;
 
-  function closeXCard() {
-    document.getElementById("xcardBg").classList.remove("open");
-    document.body.style.overflow = "";
-  }
+    function openXCard(p, imgs) {
+      currentImgs = imgs || []; currentImgIndex = 0;
+      document.getElementById("xcardName").textContent = p.name;
+      document.getElementById("xcardPrice").textContent = p.price;
+      document.getElementById("xcardDesc").textContent = p.desc;
+      document.getElementById("xcardSeries").textContent = SERIES[p.series] ? SERIES[p.series].label : p.series;
+      document.getElementById("xcardBuy").href = p.url;
+      setMainImg(0);
 
-  document.getElementById("xcardClose").addEventListener("click", e => { e.stopPropagation(); closeXCard(); });
-  document.getElementById("xcardBg").addEventListener("click",    e => { if (e.target===e.currentTarget) closeXCard(); });
-  document.getElementById("xcardBuy").addEventListener("click",   e => e.stopPropagation());
+      const thumbsEl = document.getElementById("xcardThumbs");
+      thumbsEl.innerHTML = "";
+      if (currentImgs.length > 1) {
+        thumbsEl.style.display = "flex";
+        currentImgs.forEach((src, idx) => {
+          const t = document.createElement("div");
+          t.className = "xcard__thumb" + (idx === 0 ? " active" : "");
+          t.innerHTML = `<img src="${src}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"/>`;
+          t.addEventListener("click", e => { e.stopPropagation(); setMainImg(idx); });
+          thumbsEl.appendChild(t);
+        });
+      } else {
+        thumbsEl.style.display = "none";
+      }
 
-  document.addEventListener("keydown", e => {
-    if (e.key==="Escape") closeXCard();
-    if (e.key==="ArrowRight"&&currentImgs.length>1) setMainImg((currentImgIndex+1)%currentImgs.length);
-    if (e.key==="ArrowLeft" &&currentImgs.length>1) setMainImg((currentImgIndex-1+currentImgs.length)%currentImgs.length);
-  });
+      document.getElementById("xcardBg").classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
 
-  let touchStartX = 0;
-  document.getElementById("xcardMainImg").addEventListener("touchstart", e=>{touchStartX=e.touches[0].clientX;},{passive:true});
-  document.getElementById("xcardMainImg").addEventListener("touchend",   e=>{
-    const diff=touchStartX-e.changedTouches[0].clientX;
-    if(Math.abs(diff)>40&&currentImgs.length>1)
-      setMainImg(diff>0?(currentImgIndex+1)%currentImgs.length:(currentImgIndex-1+currentImgs.length)%currentImgs.length);
-  },{passive:true});
+    function setMainImg(idx) {
+      currentImgIndex = idx;
+      const el = document.getElementById("xcardMainImg");
+      el.style.opacity = "0";
+      setTimeout(() => { el.src = currentImgs[idx] || ""; el.style.opacity = "1"; }, 150);
+      document.querySelectorAll(".xcard__thumb").forEach((t, i) => t.classList.toggle("active", i === idx));
+    }
 
+    function closeXCard() {
+      document.getElementById("xcardBg").classList.remove("open");
+      document.body.style.overflow = "";
+    }
 
-  /* ── Nav ────────────────────────────────────────────────────── */
-  window.addEventListener("scroll",()=>{
-    document.getElementById("nav").classList.toggle("scrolled", window.scrollY>40);
-  });
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener("click",e=>{
-      const t=document.querySelector(a.getAttribute("href"));
-      if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth"});}
+    document.getElementById("xcardClose").addEventListener("click", e => { e.stopPropagation(); closeXCard(); });
+    document.getElementById("xcardBg").addEventListener("click", e => { if (e.target === e.currentTarget) closeXCard(); });
+    document.getElementById("xcardBuy").addEventListener("click", e => e.stopPropagation());
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeXCard();
+      if (e.key === "ArrowRight" && currentImgs.length > 1) setMainImg((currentImgIndex + 1) % currentImgs.length);
+      if (e.key === "ArrowLeft" && currentImgs.length > 1) setMainImg((currentImgIndex - 1 + currentImgs.length) % currentImgs.length);
     });
-  });
 
-  buildTabs();
-  renderGrid();
+    let touchStartX = 0;
+    document.getElementById("xcardMainImg").addEventListener("touchstart", e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    document.getElementById("xcardMainImg").addEventListener("touchend", e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40 && currentImgs.length > 1)
+        setMainImg(diff > 0 ? (currentImgIndex + 1) % currentImgs.length : (currentImgIndex - 1 + currentImgs.length) % currentImgs.length);
+    }, { passive: true });
+
+
+    /* ── Nav ────────────────────────────────────────────────────── */
+    window.addEventListener("scroll", () => {
+      document.getElementById("nav").classList.toggle("scrolled", window.scrollY > 40);
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", e => {
+        const t = document.querySelector(a.getAttribute("href"));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: "smooth" }); }
+      });
+    });
+
+    buildTabs();
+    renderGrid();
 
   </script>
 </body>
+
 </html>
