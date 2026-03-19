@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Triggerfish — Merch</title>
   <link rel="stylesheet" href="stylesheet.css" />
   <style>
@@ -17,20 +17,14 @@
       transition: opacity .5s ease;
     }
     #loadingOverlay.fade-out { opacity: 0; pointer-events: none; }
-
     .loading__text {
       font-family: 'Roboto Mono', monospace;
       font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
       color: #3d7a3d;
     }
-    .loading__bar-wrap {
-      position: relative;
-      width: 160px;
-      padding-top: 36px;
-    }
+    .loading__bar-wrap { position: relative; width: 160px; padding-top: 36px; }
     .loading__logo {
-      position: absolute;
-      top: 0; left: -24px;
+      position: absolute; top: 0; left: -24px;
       width: 48px; height: 48px; object-fit: contain;
       filter: invert(1) brightness(0.75) sepia(1) hue-rotate(60deg) saturate(2);
       transition: left .3s ease;
@@ -40,28 +34,16 @@
       0%, 100% { opacity: 0.5; transform: scale(0.92); }
       50%       { opacity: 1;   transform: scale(1.08); }
     }
-    .loading__bar {
-      width: 100%; height: 2px;
-      background: rgba(61,122,61,0.2);
-      border-radius: 2px; overflow: hidden;
-    }
-    .loading__bar-fill {
-      height: 100%; width: 0%;
-      background: #5aaa5a;
-      border-radius: 2px;
-      transition: width .3s ease;
-    }
+    .loading__bar { width: 100%; height: 2px; background: rgba(61,122,61,0.2); border-radius: 2px; overflow: hidden; }
+    .loading__bar-fill { height: 100%; width: 0%; background: #5aaa5a; border-radius: 2px; transition: width .3s ease; }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Roboto+Mono:wght@300;400&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet" />
 </head>
 
 <body>
 
-  <!-- ── Loading Overlay ──────────────────────────────────────── -->
   <div id="loadingOverlay">
     <span class="loading__text">Loading store…</span>
     <div class="loading__bar-wrap">
@@ -144,6 +126,7 @@
     </div>
   </footer>
 
+  <!-- ── Expanded Card ──────────────────────────────────────────── -->
   <div class="xcard-bg" id="xcardBg">
     <div class="xcard" id="xcard">
       <button class="xcard__close" id="xcardClose" aria-label="Close">✕</button>
@@ -174,92 +157,21 @@
 
   <script>
 
-    /* ╔══════════════════════════════════════════════════════════════╗
-       ║  SERIES — add a new collection here                         ║
-       ╚══════════════════════════════════════════════════════════════╝ */
-
     const SERIES = {
-      "pixel": {
-        label: "Pixel Series",
-        desc: "Six original designs. Bold color, raw texture, a pixel lens.",
-      },
-      "tshirts": {
-        label: "Graphic T's",
-        desc: "",
-      },
-       "pattens": {
-        label: "Pattens",
-        desc: "Pattens of Iconic weapons",
-      },
+      "pixel":   { label: "Pixel Series", desc: "Six original designs. Bold color, raw texture, a pixel lens." },
+      "tshirts": { label: "Graphic T's",  desc: "" },
+      "pattens": { label: "Pattens",      desc: "Pattens of Iconic weapons" },
     };
 
-    /* ╔══════════════════════════════════════════════════════════════╗
-       ║  PRODUCTS                                                    ║
-       ╚══════════════════════════════════════════════════════════════╝ */
-
-    const STORE = "https://triggerfish.printful.me";
-
     const PRODUCTS = [
-
-      {
-        id: "logo",
-        series: "tshirts",
-        name: "Logo Tee",
-        price: "$27.00",
-        desc: "The OG. Classic Triggerfish logo on heavyweight cotton. Clean, bold, unmistakable.",
-        url: "https://www.printful.com/product-template/100357946/85c29c663b69ae477463e8110f1fd87d",
-        folder: "logo",
-      },
-
-      {
-        id: "canopy",
-        series: "pixel",
-        name: "Bush",
-        price: "$20.00",
-        desc: "Bush",
-        url: "https://www.printful.com/product-template/100310621/9ed1bc1303170ed5df844015265ce752",
-        folder: "Bush",
-      },
-
-      {
-        id: "bananas",
-        series: "pixel",
-        name: "Going Bananas",
-        price: "$20.00",
-        desc: "Fresh off the press. The wildest drop in the Pixel Series.",
-        url: "https://www.printful.com/product-template/100310444/146bbbad94aff8f228aab4050f343768",
-        folder: "Bananas",
-      },
-{
-        id: "shh",
-        series: "pattens",
-        name: "Shh",
-        price: "$28.00",
-        desc: "Ph Ph Ph Ph",
-        url: "https://www.printful.com/product-template/100356784/9979049073b248095bea52e22d84b594",
-        folder: "shh",
-      },
-
-      {
-        id: "stoner",
-        series: "pattens",
-        name: "Stoner",
-        price: "$28.00",
-        desc: "Master Piece",
-        url: "https://www.printful.com/product-template/100357537/68eff238032029c38d2be864ca36bd74",
-        folder: "stoner",
-      },
-
-      
+      { id: "logo",    series: "tshirts", name: "Logo Tee",       price: "$27.00", desc: "The OG. Classic Triggerfish logo on heavyweight cotton. Clean, bold, unmistakable.", url: "https://www.printful.com/product-template/100357946/85c29c663b69ae477463e8110f1fd87d", folder: "logo" },
+      { id: "canopy",  series: "pixel",   name: "Bush",            price: "$20.00", desc: "Bush",                                                                                 url: "https://www.printful.com/product-template/100310621/9ed1bc1303170ed5df844015265ce752", folder: "Bush" },
+      { id: "bananas", series: "pixel",   name: "Going Bananas",   price: "$20.00", desc: "Fresh off the press. The wildest drop in the Pixel Series.",                          url: "https://www.printful.com/product-template/100310444/146bbbad94aff8f228aab4050f343768", folder: "Bananas" },
+      { id: "shh",     series: "pattens", name: "Shh",             price: "$28.00", desc: "Ph Ph Ph Ph",                                                                         url: "https://www.printful.com/product-template/100356784/9979049073b248095bea52e22d84b594", folder: "shh" },
+      { id: "stoner",  series: "pattens", name: "Stoner",          price: "$28.00", desc: "Master Piece",                                                                        url: "https://www.printful.com/product-template/100357537/68eff238032029c38d2be864ca36bd74", folder: "stoner" },
     ];
 
-
-    /* ════════════════════════════════════════════════════════════════
-       EVERYTHING BELOW THIS LINE RUNS THE SITE — DO NOT EDIT
-    ════════════════════════════════════════════════════════════════ */
-
-    /* ── Folder Auto-Probe ────────────────────────────────────── */
-
+    /* ── Image probing ── */
     function probeImage(src) {
       return new Promise(resolve => {
         const img = new Image();
@@ -273,8 +185,7 @@
       const imgs = [];
       for (let i = 1; i <= max; i++) {
         const src = `${folder}/Shirt ${i}.png`;
-        const found = await probeImage(src);
-        if (!found) break;
+        if (!await probeImage(src)) break;
         imgs.push(src);
       }
       return imgs;
@@ -285,34 +196,24 @@
       const loadLogo = document.getElementById("loadLogo");
       const total = PRODUCTS.filter(p => p.folder && !p.imgs).length;
       let done = 0;
-
-      await Promise.all(
-        PRODUCTS.map(async p => {
-          if (p.folder && !p.imgs) {
-            p.imgs = await probeFolder(p.folder);
-            done++;
-            if (total > 0) {
-              const pct = Math.round((done / total) * 100);
-              loadBar.style.width = `${pct}%`;
-              loadLogo.style.left = `calc(${pct}% - 24px)`;
-            }
-          }
-        })
-      );
+      await Promise.all(PRODUCTS.map(async p => {
+        if (p.folder && !p.imgs) {
+          p.imgs = await probeFolder(p.folder);
+          done++;
+          const pct = total > 0 ? Math.round((done / total) * 100) : 100;
+          loadBar.style.width = `${pct}%`;
+          loadLogo.style.left = `calc(${pct}% - 24px)`;
+        }
+      }));
     }
 
-
-    /* ── Tabs ───────────────────────────────────────────────────── */
+    /* ── Tabs ── */
     function buildTabs() {
       const used = [...new Set(PRODUCTS.map(p => p.series))];
       const tabsEl = document.getElementById("seriesTabs");
       let html = `<button class="stab active" data-series="all">All</button>`;
       used.forEach(key => {
-        if (SERIES[key]) {
-          html += `<button class="stab" data-series="${key}">
-            <span class="stab__dot"></span>${SERIES[key].label}
-          </button>`;
-        }
+        if (SERIES[key]) html += `<button class="stab" data-series="${key}"><span class="stab__dot"></span>${SERIES[key].label}</button>`;
       });
       tabsEl.innerHTML = html;
       tabsEl.addEventListener("click", e => {
@@ -325,8 +226,7 @@
       });
     }
 
-
-    /* ── Fish Tank ──────────────────────────────────────────────── */
+    /* ── Fish Tank ── */
     (function initTank() {
       const tank = document.getElementById("tank");
       const DEPTHS = [
@@ -337,7 +237,6 @@
         { scale: 1.10, opacity: 0.38, speed:  5, blur: 0 },
         { scale: 1.55, opacity: 0.50, speed:  4, blur: 0 },
       ];
-
       function pickDepth() {
         const r = Math.random();
         if (r < 0.12) return DEPTHS[5];
@@ -394,16 +293,14 @@
       }
       (function lerp() {
         const ease = 0.055; cx += (tx - cx) * ease; cy += (ty - cy) * ease;
-        tank.style.transform    = `translate(${cx * -30}px,${cy * -15}px)`;
+        tank.style.transform        = `translate(${cx * -30}px,${cy * -15}px)`;
         heroContent.style.transform = `translate(${cx * 10}px,${cy * 6}px)`;
         requestAnimationFrame(lerp);
       })();
     })();
 
-
-    /* ── Grid ───────────────────────────────────────────────────── */
+    /* ── Grid ── */
     let active = "all";
-
     function filtered() {
       return active === "all" ? PRODUCTS : PRODUCTS.filter(p => p.series === active);
     }
@@ -420,20 +317,15 @@
       document.getElementById("stripCount").textContent = products.length;
 
       g.innerHTML = "";
-
       products.forEach((p, i) => {
         const imgs = p.imgs ? p.imgs.filter(Boolean) : [];
         const coverSrc = imgs.length ? imgs[0] : "";
-
         const card = document.createElement("div");
         card.className = "card";
         card.style.animationDelay = `${i * 0.07}s`;
         card.innerHTML = `
           <div class="card__img">
-            ${coverSrc
-              ? `<img src="${coverSrc}" alt="${p.name}" loading="lazy"
-                  onerror="this.closest('.card__img').classList.add('card__img--missing');this.style.display='none'"/>`
-              : ""}
+            ${coverSrc ? `<img src="${coverSrc}" alt="${p.name}" loading="lazy" onerror="this.closest('.card__img').classList.add('card__img--missing');this.style.display='none'"/>` : ""}
             <div class="card__missing-msg">No images found.<br/>Check that <em>${p.folder || p.id}</em><br/>folder exists &amp; has Shirt 1.png</div>
             <div class="card__hover-hint"><span>View Details</span></div>
             <span class="card__chip">${SERIES[p.series] ? SERIES[p.series].label : p.series}</span>
@@ -445,23 +337,20 @@
               <span class="card__cta-hint">Tap to explore</span>
             </div>
           </div>`;
-
         if (!coverSrc) card.querySelector(".card__img").classList.add("card__img--missing");
-
         card.addEventListener("click", () => openXCard(p, imgs));
         g.appendChild(card);
       });
     }
 
-
-    /* ── Expanded Card ──────────────────────────────────────────── */
+    /* ── Expanded Card ── */
     let currentImgs = [], currentImgIndex = 0;
 
     function openXCard(p, imgs) {
       currentImgs = imgs || []; currentImgIndex = 0;
-      document.getElementById("xcardName").textContent  = p.name;
-      document.getElementById("xcardPrice").textContent = p.price;
-      document.getElementById("xcardDesc").textContent  = p.desc;
+      document.getElementById("xcardName").textContent   = p.name;
+      document.getElementById("xcardPrice").textContent  = p.price;
+      document.getElementById("xcardDesc").textContent   = p.desc;
       document.getElementById("xcardSeries").textContent = SERIES[p.series] ? SERIES[p.series].label : p.series;
       document.getElementById("xcardBuy").href = p.url;
       setMainImg(0);
@@ -501,8 +390,6 @@
     document.getElementById("xcardClose").addEventListener("click", e => { e.stopPropagation(); closeXCard(); });
     document.getElementById("xcardBg").addEventListener("click", e => { if (e.target === e.currentTarget) closeXCard(); });
 
-
-    /* ── Keyboard & Swipe ───────────────────────────────────────── */
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") closeXCard();
       if (e.key === "ArrowRight" && currentImgs.length > 1) setMainImg((currentImgIndex + 1) % currentImgs.length);
@@ -519,8 +406,7 @@
           : (currentImgIndex - 1 + currentImgs.length) % currentImgs.length);
     }, { passive: true });
 
-
-    /* ── Nav scroll ─────────────────────────────────────────────── */
+    /* ── Nav scroll ── */
     window.addEventListener("scroll", () => {
       document.getElementById("nav").classList.toggle("scrolled", window.scrollY > 40);
     });
@@ -531,15 +417,11 @@
       });
     });
 
-
-    /* ── Boot: probe folders → build site → hide loader ────────── */
+    /* ── Boot ── */
     (async () => {
       await resolveAllProducts();
-
       buildTabs();
       renderGrid();
-
-      // Fade out the loading screen
       const overlay = document.getElementById("loadingOverlay");
       overlay.classList.add("fade-out");
       setTimeout(() => overlay.remove(), 600);
@@ -547,5 +429,4 @@
 
   </script>
 </body>
-
 </html>
