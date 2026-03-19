@@ -7,7 +7,6 @@
   <title>Triggerfish — Merch</title>
   <link rel="stylesheet" href="stylesheet.css" />
   <style>
-    /* ── Loading Overlay ─────────────────────────────────────── */
     #loadingOverlay {
       position: fixed; inset: 0; z-index: 2000;
       background: #0a0d0a;
@@ -34,7 +33,7 @@
       0%, 100% { opacity: 0.5; transform: scale(0.92); }
       50%       { opacity: 1;   transform: scale(1.08); }
     }
-    .__bar { width: 100%; height: 2px; background: rgba(61,122,61,0.2); border-radius: 2px; overflow: hidden; }
+    .loading__bar { width: 100%; height: 2px; background: rgba(61,122,61,0.2); border-radius: 2px; overflow: hidden; }
     .loading__bar-fill { height: 100%; width: 0%; background: #5aaa5a; border-radius: 2px; transition: width .3s ease; }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -45,7 +44,7 @@
 <body>
 
   <div id="loadingOverlay">
-    <span class="loading__text">Loading TriggerFish..</span>
+    <span class="loading__text">Loading store…</span>
     <div class="loading__bar-wrap">
       <img src="logo.png" alt="" class="loading__logo" id="loadLogo" />
       <div class="loading__bar">
@@ -126,17 +125,20 @@
     </div>
   </footer>
 
-  <!-- ── Expanded Card ──────────────────────────────────────────── -->
+  <!-- ── Expanded Card Overlay ── -->
   <div class="xcard-bg" id="xcardBg">
     <div class="xcard" id="xcard">
+
       <button class="xcard__close" id="xcardClose" aria-label="Close">✕</button>
-      <div class="xcard__gallery">
+
+      <!-- DESKTOP layout: two column -->
+      <div class="xcard__gallery" id="xcardGallery">
         <div class="xcard__img-main">
           <img id="xcardMainImg" src="" alt="" />
         </div>
         <div class="xcard__thumbs" id="xcardThumbs"></div>
       </div>
-      <div class="xcard__info">
+      <div class="xcard__info" id="xcardInfo">
         <span class="xcard__series" id="xcardSeries"></span>
         <h2 class="xcard__name" id="xcardName"></h2>
         <p class="xcard__price" id="xcardPrice"></p>
@@ -152,6 +154,30 @@
         </a>
         <p class="xcard__note">Secure checkout on Printful</p>
       </div>
+
+      <!-- MOBILE layout: full-screen swiper with bottom overlay -->
+      <div class="xcard__mobile" id="xcardMobile">
+        <!-- Horizontally scrollable image strip -->
+        <div class="xcard__swiper" id="xcardSwiper"></div>
+
+        <!-- Dot indicators -->
+        <div class="xcard__dots" id="xcardDots"></div>
+
+        <!-- Bottom overlay panel -->
+        <div class="xcard__overlay">
+          <span class="xcard__ov-series" id="xcardOvSeries"></span>
+          <div class="xcard__ov-header">
+            <h2 class="xcard__ov-name" id="xcardOvName"></h2>
+            <span class="xcard__ov-price" id="xcardOvPrice"></span>
+          </div>
+          <p class="xcard__ov-desc" id="xcardOvDesc"></p>
+          <a class="xcard__ov-btn" id="xcardOvBuy" href="#" target="_blank" rel="noopener">
+            Buy Now →
+          </a>
+          <p class="xcard__ov-note">Ships worldwide · Secure checkout</p>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -164,11 +190,11 @@
     };
 
     const PRODUCTS = [
-      { id: "logo",    series: "tshirts", name: "Logo Tee",       price: "$27.00", desc: "The OG. Classic Triggerfish logo on heavyweight cotton. Clean, bold, unmistakable.", url: "https://www.printful.com/product-template/100357946/85c29c663b69ae477463e8110f1fd87d", folder: "logo" },
-      { id: "canopy",  series: "pixel",   name: "Bush",            price: "$20.00", desc: "Bush",                                                                                 url: "https://www.printful.com/product-template/100310621/9ed1bc1303170ed5df844015265ce752", folder: "Bush" },
-      { id: "bananas", series: "pixel",   name: "Going Bananas",   price: "$20.00", desc: "Fresh off the press. The wildest drop in the Pixel Series.",                          url: "https://www.printful.com/product-template/100310444/146bbbad94aff8f228aab4050f343768", folder: "Bananas" },
-      { id: "shh",     series: "pattens", name: "Shh",             price: "$28.00", desc: "Ph Ph Ph Ph",                                                                         url: "https://www.printful.com/product-template/100356784/9979049073b248095bea52e22d84b594", folder: "shh" },
-      { id: "stoner",  series: "pattens", name: "Stoner",          price: "$28.00", desc: "Master Piece",                                                                        url: "https://www.printful.com/product-template/100357537/68eff238032029c38d2be864ca36bd74", folder: "stoner" },
+      { id: "logo",    series: "tshirts", name: "Logo Tee",     price: "$27.00", desc: "The OG. Classic Triggerfish logo on heavyweight cotton. Clean, bold, unmistakable.", url: "https://www.printful.com/product-template/100357946/85c29c663b69ae477463e8110f1fd87d", folder: "logo" },
+      { id: "canopy",  series: "pixel",   name: "Bush",          price: "$20.00", desc: "Bush", url: "https://www.printful.com/product-template/100310621/9ed1bc1303170ed5df844015265ce752", folder: "Bush" },
+      { id: "bananas", series: "pixel",   name: "Going Bananas", price: "$20.00", desc: "Fresh off the press. The wildest drop in the Pixel Series.", url: "https://www.printful.com/product-template/100310444/146bbbad94aff8f228aab4050f343768", folder: "Bananas" },
+      { id: "shh",     series: "pattens", name: "Shh",           price: "$28.00", desc: "Ph Ph Ph Ph", url: "https://www.printful.com/product-template/100356784/9979049073b248095bea52e22d84b594", folder: "shh" },
+      { id: "stoner",  series: "pattens", name: "Stoner",        price: "$28.00", desc: "Master Piece", url: "https://www.printful.com/product-template/100357537/68eff238032029c38d2be864ca36bd74", folder: "stoner" },
     ];
 
     /* ── Image probing ── */
@@ -180,7 +206,6 @@
         img.src = src;
       });
     }
-
     async function probeFolder(folder, max = 40) {
       const imgs = [];
       for (let i = 1; i <= max; i++) {
@@ -190,7 +215,6 @@
       }
       return imgs;
     }
-
     async function resolveAllProducts() {
       const loadBar  = document.getElementById("loadBar");
       const loadLogo = document.getElementById("loadLogo");
@@ -264,7 +288,6 @@
         setTimeout(() => { goingRight = !goingRight; swim(); }, dur + 100);
       }
       setTimeout(swim, 500);
-
       const caustics = document.getElementById("caustics");
       for (let i = 0; i < 9; i++) {
         const c = document.createElement("div");
@@ -273,7 +296,6 @@
         c.style.cssText = `width:${sz}px;height:${sz * .42}px;left:${Math.random() * 100}%;top:${Math.random() * 100}%;animation-delay:${Math.random() * 9}s;animation-duration:${7 + Math.random() * 7}s;`;
         caustics.appendChild(c);
       }
-
       const heroContent = document.getElementById("heroContent");
       let tx = 0, ty = 0, cx = 0, cy = 0;
       const heroEl = document.getElementById("home");
@@ -304,18 +326,15 @@
     function filtered() {
       return active === "all" ? PRODUCTS : PRODUCTS.filter(p => p.series === active);
     }
-
     function renderGrid() {
       const g = document.getElementById("grid");
       const products = filtered();
       const info = active === "all"
         ? { label: "All Products", desc: "Everything in the store." }
         : (SERIES[active] || { label: active, desc: "" });
-
       document.getElementById("stripName").textContent  = info.label;
       document.getElementById("stripDesc").textContent  = info.desc;
       document.getElementById("stripCount").textContent = products.length;
-
       g.innerHTML = "";
       products.forEach((p, i) => {
         const imgs = p.imgs ? p.imgs.filter(Boolean) : [];
@@ -345,29 +364,90 @@
 
     /* ── Expanded Card ── */
     let currentImgs = [], currentImgIndex = 0;
+    const isMobile = () => window.innerWidth <= 600;
 
     function openXCard(p, imgs) {
       currentImgs = imgs || []; currentImgIndex = 0;
-      document.getElementById("xcardName").textContent   = p.name;
-      document.getElementById("xcardPrice").textContent  = p.price;
-      document.getElementById("xcardDesc").textContent   = p.desc;
-      document.getElementById("xcardSeries").textContent = SERIES[p.series] ? SERIES[p.series].label : p.series;
-      document.getElementById("xcardBuy").href = p.url;
-      setMainImg(0);
 
-      const thumbsEl = document.getElementById("xcardThumbs");
-      thumbsEl.innerHTML = "";
-      if (currentImgs.length > 1) {
-        thumbsEl.style.display = "flex";
-        currentImgs.forEach((src, idx) => {
-          const t = document.createElement("div");
-          t.className = "xcard__thumb" + (idx === 0 ? " active" : "");
-          t.innerHTML = `<img src="${src}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"/>`;
-          t.addEventListener("click", e => { e.stopPropagation(); setMainImg(idx); });
-          thumbsEl.appendChild(t);
+      if (isMobile()) {
+        /* ── MOBILE: swiper + bottom overlay ── */
+        document.getElementById("xcardGallery").style.display = "none";
+        document.getElementById("xcardInfo").style.display    = "none";
+        document.getElementById("xcardMobile").style.display  = "flex";
+
+        // Overlay text
+        document.getElementById("xcardOvSeries").textContent = SERIES[p.series] ? SERIES[p.series].label : p.series;
+        document.getElementById("xcardOvName").textContent   = p.name;
+        document.getElementById("xcardOvPrice").textContent  = p.price;
+        document.getElementById("xcardOvDesc").textContent   = p.desc;
+        document.getElementById("xcardOvBuy").href            = p.url;
+
+        // Build swiper slides
+        const swiper = document.getElementById("xcardSwiper");
+        swiper.innerHTML = "";
+        (currentImgs.length ? currentImgs : [""]).forEach(src => {
+          const slide = document.createElement("div");
+          slide.className = "xcard__swiper-slide";
+          if (src) {
+            const img = document.createElement("img");
+            img.src = src; img.alt = "";
+            slide.appendChild(img);
+          }
+          swiper.appendChild(slide);
         });
+
+        // Build dots
+        const dotsEl = document.getElementById("xcardDots");
+        dotsEl.innerHTML = "";
+        if (currentImgs.length > 1) {
+          currentImgs.forEach((_, i) => {
+            const d = document.createElement("span");
+            d.className = "xcard__dot" + (i === 0 ? " active" : "");
+            dotsEl.appendChild(d);
+          });
+          dotsEl.style.display = "flex";
+
+          // Sync dots to scroll position
+          let scrollTimer;
+          swiper.addEventListener("scroll", () => {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+              const idx = Math.round(swiper.scrollLeft / swiper.offsetWidth);
+              currentImgIndex = idx;
+              dotsEl.querySelectorAll(".xcard__dot").forEach((d, i) => d.classList.toggle("active", i === idx));
+            }, 50);
+          }, { passive: true });
+        } else {
+          dotsEl.style.display = "none";
+        }
+
       } else {
-        thumbsEl.style.display = "none";
+        /* ── DESKTOP: classic two-column layout ── */
+        document.getElementById("xcardGallery").style.display = "";
+        document.getElementById("xcardInfo").style.display    = "";
+        document.getElementById("xcardMobile").style.display  = "none";
+
+        document.getElementById("xcardName").textContent   = p.name;
+        document.getElementById("xcardPrice").textContent  = p.price;
+        document.getElementById("xcardDesc").textContent   = p.desc;
+        document.getElementById("xcardSeries").textContent = SERIES[p.series] ? SERIES[p.series].label : p.series;
+        document.getElementById("xcardBuy").href = p.url;
+        setMainImg(0);
+
+        const thumbsEl = document.getElementById("xcardThumbs");
+        thumbsEl.innerHTML = "";
+        if (currentImgs.length > 1) {
+          thumbsEl.style.display = "flex";
+          currentImgs.forEach((src, idx) => {
+            const t = document.createElement("div");
+            t.className = "xcard__thumb" + (idx === 0 ? " active" : "");
+            t.innerHTML = `<img src="${src}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"/>`;
+            t.addEventListener("click", e => { e.stopPropagation(); setMainImg(idx); });
+            thumbsEl.appendChild(t);
+          });
+        } else {
+          thumbsEl.style.display = "none";
+        }
       }
 
       document.getElementById("xcardBg").classList.add("open");
@@ -392,8 +472,10 @@
 
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") closeXCard();
-      if (e.key === "ArrowRight" && currentImgs.length > 1) setMainImg((currentImgIndex + 1) % currentImgs.length);
-      if (e.key === "ArrowLeft"  && currentImgs.length > 1) setMainImg((currentImgIndex - 1 + currentImgs.length) % currentImgs.length);
+      if (!isMobile()) {
+        if (e.key === "ArrowRight" && currentImgs.length > 1) setMainImg((currentImgIndex + 1) % currentImgs.length);
+        if (e.key === "ArrowLeft"  && currentImgs.length > 1) setMainImg((currentImgIndex - 1 + currentImgs.length) % currentImgs.length);
+      }
     });
 
     let touchStartX = 0;
