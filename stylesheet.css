@@ -486,114 +486,131 @@ img { display: block; max-width: 100%; height: auto; }
   .footer__links { gap: 16px; }
   .footer__base { font-size: 10px; }
 
-  /* ── EXPANDED CARD: full screen, zero scroll ── */
+  /* ── EXPANDED CARD: true full-screen, zero scroll ── */
+
+  /* Overlay: no padding, no flex centering — card is positioned absolutely */
   .xcard-bg {
     padding: 0;
-    align-items: stretch;    /* card stretches full height */
-    justify-content: stretch;
+    display: block;          /* kill flex so the card can go absolute */
   }
 
+  /* Card: pin to every edge of the screen. Period. */
   .xcard {
+    position: absolute;
+    inset: 0;                /* top:0 right:0 bottom:0 left:0 */
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    grid-template-columns: unset;  /* kill the desktop 2-col grid */
-    width: 100%;
-    height: 100dvh;          /* exact screen height — no overflow */
-    max-width: 100%;
-    max-height: 100dvh;
+    grid-template-columns: unset;
+    max-width: unset;
+    max-height: unset;
     border-radius: 0;
     border: none;
-    overflow: hidden;        /* nothing escapes the card */
+    overflow: hidden;        /* nothing escapes */
     transform: translateY(100%);
-    transition: transform .38s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform .36s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     box-shadow: none;
   }
   .xcard-bg.open .xcard { transform: translateY(0); }
 
-  /* Close button: larger, top-right */
+  /* Close button */
   .xcard__close {
-    width: 36px; height: 36px;
-    top: 12px; right: 12px;
+    width: 38px; height: 38px;
+    top: calc(14px + env(safe-area-inset-top));
+    right: 14px;
     font-size: 14px;
-    /* safe area padding for notched phones */
-    top: calc(12px + env(safe-area-inset-top));
   }
 
-  /* Image takes up exactly 48% of screen height */
+  /* Gallery: exactly 46% of the screen height, never grows or shrinks */
   .xcard__gallery {
-    flex: 0 0 48%;
-    min-height: 0;
+    flex: 0 0 46%;
+    height: 46%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
+  /* Main image fills the gallery, aspect-ratio removed — height is king */
   .xcard__img-main {
     flex: 1;
-    min-height: 0;
-    aspect-ratio: unset;     /* let flexbox control height, not aspect ratio */
+    height: 0;               /* forces flex to control the height */
+    aspect-ratio: unset;
+    overflow: hidden;
     cursor: default;
   }
   .xcard__img-main img {
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    transition: opacity .18s ease;
   }
 
-  /* Thumb strip: fixed compact height */
+  /* Thumb strip: small fixed height */
   .xcard__thumbs {
-    flex-shrink: 0;
+    flex: 0 0 auto;
     padding: 6px 10px;
     gap: 5px;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
-  .xcard__thumb { width: 44px; height: 55px; }
+  .xcard__thumb { width: 42px; height: 52px; }
 
-  /* Info takes remaining 52% — everything must fit, NO scroll */
+  /* Info: fills the remaining 54%, nothing overflows, nothing scrolls */
   .xcard__info {
     flex: 1;
-    min-height: 0;
-    overflow: hidden;        /* ← the key rule: no scrolling */
-    padding: 14px 18px 16px;
+    height: 0;               /* forces flex to control height */
+    overflow: hidden;        /* THE rule — hard clip, no scroll */
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    /* safe area for home-bar devices */
-    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    gap: 0;
+    padding: 16px 18px calc(16px + env(safe-area-inset-bottom)) 18px;
   }
 
-  .xcard__series { font-size: 9px; letter-spacing: 0.16em; flex-shrink: 0; }
-  .xcard__name   { font-size: 24px; line-height: 1; flex-shrink: 0; }
-  .xcard__price  { font-size: 17px; flex-shrink: 0; }
+  .xcard__series {
+    font-size: 9px; letter-spacing: 0.16em;
+    flex-shrink: 0;
+    margin-bottom: 6px;
+  }
+  .xcard__name {
+    font-size: 26px; line-height: 1;
+    flex-shrink: 0;
+    margin-bottom: 6px;
+  }
+  .xcard__price {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-bottom: 8px;
+  }
 
-  /* Description: shrinks if needed but never causes overflow */
+  /* Desc: takes all spare space but clips silently — NO scroll, NO clamp bar */
   .xcard__desc {
     font-size: 12px;
     line-height: 1.5;
-    color: var(--muted);
     flex: 1;
     min-height: 0;
     overflow: hidden;
-    /* clip long descriptions — no scrollbar */
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
   }
 
-  .xcard__rule { flex-shrink: 0; margin: 2px 0; }
+  .xcard__rule {
+    flex-shrink: 0;
+    margin: 10px 0 8px;
+  }
 
-  /* Hide perks list — not enough room on small screens */
+  /* Perks hidden — not enough room */
   .xcard__perks { display: none; }
 
-  /* Buy button: always visible, full width */
+  /* Buy button: fixed height, always visible */
   .xcard__buy {
     flex-shrink: 0;
-    font-size: 13px;
-    padding: 13px 24px;
-    margin-top: auto;        /* push to bottom if there's slack */
+    font-size: 14px;
+    padding: 14px 24px;
+    margin-bottom: 6px;
   }
 
   .xcard__note {
     flex-shrink: 0;
     font-size: 10px;
-    padding-bottom: 2px;
   }
 }
 
