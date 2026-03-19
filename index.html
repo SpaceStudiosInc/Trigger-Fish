@@ -17,22 +17,31 @@
       transition: opacity .5s ease;
     }
     #loadingOverlay.fade-out { opacity: 0; pointer-events: none; }
-    .loading__logo {
-      width: 48px; height: 48px; object-fit: contain;
-      filter: invert(1) brightness(0.75) sepia(1) hue-rotate(60deg) saturate(2);
-      animation: loadPulse 1.4s ease-in-out infinite;
-    }
-    @keyframes loadPulse {
-      0%, 100% { opacity: 0.4; transform: scale(0.95); }
-      50%       { opacity: 1;   transform: scale(1.05); }
-    }
+
     .loading__text {
       font-family: 'Roboto Mono', monospace;
       font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
       color: #3d7a3d;
     }
+    .loading__bar-wrap {
+      position: relative;
+      width: 160px;
+      padding-top: 36px;
+    }
+    .loading__logo {
+      position: absolute;
+      top: 0; left: -24px;
+      width: 48px; height: 48px; object-fit: contain;
+      filter: invert(1) brightness(0.75) sepia(1) hue-rotate(60deg) saturate(2);
+      transition: left .3s ease;
+      animation: loadPulse 1.4s ease-in-out infinite;
+    }
+    @keyframes loadPulse {
+      0%, 100% { opacity: 0.5; transform: scale(0.92); }
+      50%       { opacity: 1;   transform: scale(1.08); }
+    }
     .loading__bar {
-      width: 160px; height: 2px;
+      width: 100%; height: 2px;
       background: rgba(61,122,61,0.2);
       border-radius: 2px; overflow: hidden;
     }
@@ -54,9 +63,13 @@
 
   <!-- ── Loading Overlay ──────────────────────────────────────── -->
   <div id="loadingOverlay">
-    <img src="logo.png" alt="" class="loading__logo" />
-    <div class="loading__bar"><div class="loading__bar-fill" id="loadBar"></div></div>
     <span class="loading__text">Loading store…</span>
+    <div class="loading__bar-wrap">
+      <img src="logo.png" alt="" class="loading__logo" id="loadLogo" />
+      <div class="loading__bar">
+        <div class="loading__bar-fill" id="loadBar"></div>
+      </div>
+    </div>
   </div>
 
   <nav class="nav" id="nav">
@@ -180,8 +193,6 @@
       },
     };
 
-//https://www.printful.com/product-template/100356784/9979049073b248095bea52e22d84b594
-
     /* ╔══════════════════════════════════════════════════════════════╗
        ║  PRODUCTS                                                    ║
        ╚══════════════════════════════════════════════════════════════╝ */
@@ -270,7 +281,8 @@
     }
 
     async function resolveAllProducts() {
-      const loadBar = document.getElementById("loadBar");
+      const loadBar  = document.getElementById("loadBar");
+      const loadLogo = document.getElementById("loadLogo");
       const total = PRODUCTS.filter(p => p.folder && !p.imgs).length;
       let done = 0;
 
@@ -279,7 +291,11 @@
           if (p.folder && !p.imgs) {
             p.imgs = await probeFolder(p.folder);
             done++;
-            if (total > 0) loadBar.style.width = `${Math.round((done / total) * 100)}%`;
+            if (total > 0) {
+              const pct = Math.round((done / total) * 100);
+              loadBar.style.width = `${pct}%`;
+              loadLogo.style.left = `calc(${pct}% - 24px)`;
+            }
           }
         })
       );
