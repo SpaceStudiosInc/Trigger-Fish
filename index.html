@@ -6,6 +6,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Triggerfish — Merch</title>
   <link rel="stylesheet" href="stylesheet.css" />
+  <style>
+    /* ── Loading Overlay ─────────────────────────────────────── */
+    #loadingOverlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: #0a0d0a;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 18px;
+      transition: opacity .5s ease;
+    }
+    #loadingOverlay.fade-out { opacity: 0; pointer-events: none; }
+    .loading__logo {
+      width: 48px; height: 48px; object-fit: contain;
+      filter: invert(1) brightness(0.75) sepia(1) hue-rotate(60deg) saturate(2);
+      animation: loadPulse 1.4s ease-in-out infinite;
+    }
+    @keyframes loadPulse {
+      0%, 100% { opacity: 0.4; transform: scale(0.95); }
+      50%       { opacity: 1;   transform: scale(1.05); }
+    }
+    .loading__text {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: #3d7a3d;
+    }
+    .loading__bar {
+      width: 160px; height: 2px;
+      background: rgba(61,122,61,0.2);
+      border-radius: 2px; overflow: hidden;
+    }
+    .loading__bar-fill {
+      height: 100%; width: 0%;
+      background: #5aaa5a;
+      border-radius: 2px;
+      transition: width .3s ease;
+    }
+  </style>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -14,6 +51,13 @@
 </head>
 
 <body>
+
+  <!-- ── Loading Overlay ──────────────────────────────────────── -->
+  <div id="loadingOverlay">
+    <img src="logo.png" alt="" class="loading__logo" />
+    <div class="loading__bar"><div class="loading__bar-fill" id="loadBar"></div></div>
+    <span class="loading__text">Loading store…</span>
+  </div>
 
   <nav class="nav" id="nav">
     <a href="#home" class="nav__brand">
@@ -119,11 +163,6 @@
 
     /* ╔══════════════════════════════════════════════════════════════╗
        ║  SERIES — add a new collection here                         ║
-       ║                                                              ║
-       ║  "your-key": {                                               ║
-       ║    label: "Display Name",                                    ║
-       ║    desc:  "Short line shown under the tab.",                 ║
-       ║  },                                                          ║
        ╚══════════════════════════════════════════════════════════════╝ */
 
     const SERIES = {
@@ -131,52 +170,23 @@
         label: "Pixel Series",
         desc: "Six original designs. Bold color, raw texture, a pixel lens.",
       },
-      
       "tshirts": {
         label: "Graphic T's",
         desc: "",
       },
-      // ── ADD NEW SERIES HERE ──────────────────────────────────────
-      // "galaxy": {
-      //   label: "Galaxy Series",
-      //   desc:  "Cosmic drops. Deep space aesthetics on premium cotton.",
-      // },
-      // ────────────────────────────────────────────────────────────
+       "pattens": {
+        label: "Pattens",
+        desc: "Pattens of Iconic weapons",
+      },
     };
 
+//https://www.printful.com/product-template/100356784/9979049073b248095bea52e22d84b594
 
     /* ╔══════════════════════════════════════════════════════════════╗
-       ║  PRODUCTS — your shirts                                      ║
-       ║                                                              ║
-       ║  HOW TO ADD IMAGES:                                          ║
-       ║  Put your PNGs in the shirt folder, then list them in        ║
-       ║  the imgs: [ ] array exactly as they are named.             ║
-       ║                                                              ║
-       ║  Example — if your folder looks like this:                   ║
-       ║    canopy/front.png                                   ║
-       ║    canopy/back.png                                    ║
-       ║    canopy/detail.png                                  ║
-       ║                                                              ║
-       ║  Then write:                                                 ║
-       ║    imgs: [                                                    ║
-       ║      "canopy/front.png",                              ║
-       ║      "canopy/back.png",                               ║
-       ║      "canopy/detail.png",                             ║
-       ║    ],                                                         ║
-       ║                                                              ║
-       ║  The FIRST image in the list shows on the grid card.         ║
-       ║  All images show in the gallery when the card is opened.     ║
-       ║                                                              ║
-       ║  HOW TO ADD A NEW SHIRT:                                     ║
-       ║  Copy any block below, paste it before the ]; at the end,    ║
-       ║  and fill in your details.                                   ║
+       ║  PRODUCTS                                                    ║
        ╚══════════════════════════════════════════════════════════════╝ */
-//bush - "https://www.printful.com/product-template/100310621/9ed1bc1303170ed5df844015265ce752",
-//Forest - "https://www.printful.com/product-template/100310613/73c2a6a997cc5d9c240cc76da424b80b",
-//ember 1- "https://www.printful.com/product-template/100310501/0bdeac20259e62cdeed05572cdf30508",
-//ember 2- "https://www.printful.com/product-template/100310458/4b04618a058f38d36857448641871e7f",
-//logo - "https://www.printful.com/product-template/100310444/146bbbad94aff8f228aab4050f343768",
-//bananas
+
+    const STORE = "https://triggerfish.printful.me";
 
     const PRODUCTS = [
 
@@ -186,11 +196,8 @@
         name: "Logo Tee",
         price: "$27.00",
         desc: "The OG. Classic Triggerfish logo on heavyweight cotton. Clean, bold, unmistakable.",
-        url: "https://www.printful.com/product-template/100310444/146bbbad94aff8f228aab4050f343768",
-        imgs: [
-          "archive/Shirt 1.png",
-          "archive/Shirt 2.png",
-        ],
+        url: STORE,
+        folder: "logo",
       },
 
       {
@@ -199,105 +206,40 @@
         name: "Bush",
         price: "$20.00",
         desc: "Bush",
-        url: "https://www.printful.com/product-template/100310621/9ed1bc1303170ed5df844015265ce752",
-        imgs: [
-          "Bush/Shirt 1.png",
-          "Bush/Shirt 2.png",
-          "Bush/Shirt 3.png",
-          "Bush/Shirt 4.png",
-          "Bush/Shirt 5.png",
-          "Bush/Shirt 6.png",
-          "Bush/Shirt 7.png",
-          "Bush/Shirt 8.png",
-          "Bush/Shirt 9.png",
-        ],
-      },
-
-      {
-        id: "ember-1",
-        series: "pixel",
-        name: "Ember I",
-        price: "$20.00",
-        desc: "Where the fire started. Controlled chaos rendered pixel-by-pixel. Raw, direct, unforgettable.",
-        url: "https://www.printful.com/product-template/100310501/0bdeac20259e62cdeed05572cdf30508",
-        imgs: [
-          "Ember/Shirt 1.png",
-          "Ember/Shirt 2.png",
-          "Ember/Shirt 3.png",
-          "Ember/Shirt 4.png",
-          "Ember/Shirt 5.png",
-        ],
-      },
-
-      {
-        id: "ember-2",
-        series: "pixel",
-        name: "Ember II",
-        price: "$20.00",
-        desc: "The second chapter of fire. Warmer, louder, more alive.",
-        url: "https://www.printful.com/product-template/100310458/4b04618a058f38d36857448641871e7f",
-        imgs: [
-          "ChaCha/Shirt 1.png", 
-          "ChaCha/Shirt 2.png", 
-          "ChaCha/Shirt 3.png", 
-          "ChaCha/Shirt 4.png", 
-          "ChaCha/Shirt 5.png", 
-          "ChaCha/Shirt 6.png", 
-          "ChaCha/Shirt 7.png",
-        ],
-      },
-
-      {
-        id: "wild-static",
-        series: "pixel",
-        name: "Wild Static",
-        price: "$20.00",
-        desc: "Chaotic energy. Maximum impact. A pixel explosion of color and movement.",
-        url: "73c2a6a997cc5d9c240cc76da424b80b",
-        imgs: [
-          "Tree/Shirt 1.png",
-"Tree/Shirt 2.png",
-"Tree/Shirt 3.png",
-"Tree/Shirt 4.png",
-"Tree/Shirt 5.png",
-"Tree/Shirt 6.png",
-"Tree/Shirt 7.png",
-"Tree/Shirt 8.png",
-        ],
+        url: STORE,
+        folder: "Bush",
       },
 
       {
         id: "bananas",
         series: "pixel",
         name: "Going Bananas",
-        price: "$20.00",
+        price: "$28.00",
         desc: "Fresh off the press. The wildest drop in the Pixel Series.",
-        url: "https://www.printful.com/product-template/100310444/146bbbad94aff8f228aab4050f343768",
-        imgs: [
-          "Bananas/Shirt 1.png",
-"Bananas/Shirt 2.png",
-"Bananas/Shirt 3.png",
-"Bananas/Shirt 4.png",
-"Bananas/Shirt 5.png",
-"Bananas/Shirt 6.png",
-        ],
+        url: STORE,
+        folder: "Bananas",
+      },
+{
+        id: "shh",
+        series: "pattens",
+        name: "Shh",
+        price: "$28.00",
+        desc: "Ph Ph Ph Ph",
+        url: "https://www.printful.com/product-template/100356784/9979049073b248095bea52e22d84b594",
+        folder: "shh",
       },
 
-      // ── ADD NEW SHIRTS ABOVE THIS LINE ──────────────────────────
-      // {
-      //   id:     "my-new-shirt",        ← folder name inside 
-      //   series: "pixel",               ← must match a key in SERIES
-      //   name:   "My New Shirt",
-      //   price:  "$34.00",
-      //   desc:   "Description here.",
-      //   url:    "https://www.printful.com/...",
-      //   imgs: [
-      //     "my-new-shirt/front.png",
-      //     "my-new-shirt/back.png",
-      //   ],
-      // },
-      // ────────────────────────────────────────────────────────────
+      {
+        id: "stoner",
+        series: "pattens",
+        name: "Stoner",
+        price: "$28.00",
+        desc: "Master Piece",
+        url: "https://www.printful.com/product-template/100357537/68eff238032029c38d2be864ca36bd74",
+        folder: "stoner",
+      },
 
+      
     ];
 
 
@@ -305,7 +247,46 @@
        EVERYTHING BELOW THIS LINE RUNS THE SITE — DO NOT EDIT
     ════════════════════════════════════════════════════════════════ */
 
-    // Build tabs from SERIES that actually have products
+    /* ── Folder Auto-Probe ────────────────────────────────────── */
+
+    function probeImage(src) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload  = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = src;
+      });
+    }
+
+    async function probeFolder(folder, max = 40) {
+      const imgs = [];
+      for (let i = 1; i <= max; i++) {
+        const src = `${folder}/Shirt ${i}.png`;
+        const found = await probeImage(src);
+        if (!found) break;
+        imgs.push(src);
+      }
+      return imgs;
+    }
+
+    async function resolveAllProducts() {
+      const loadBar = document.getElementById("loadBar");
+      const total = PRODUCTS.filter(p => p.folder && !p.imgs).length;
+      let done = 0;
+
+      await Promise.all(
+        PRODUCTS.map(async p => {
+          if (p.folder && !p.imgs) {
+            p.imgs = await probeFolder(p.folder);
+            done++;
+            if (total > 0) loadBar.style.width = `${Math.round((done / total) * 100)}%`;
+          }
+        })
+      );
+    }
+
+
+    /* ── Tabs ───────────────────────────────────────────────────── */
     function buildTabs() {
       const used = [...new Set(PRODUCTS.map(p => p.series))];
       const tabsEl = document.getElementById("seriesTabs");
@@ -313,8 +294,8 @@
       used.forEach(key => {
         if (SERIES[key]) {
           html += `<button class="stab" data-series="${key}">
-          <span class="stab__dot"></span>${SERIES[key].label}
-        </button>`;
+            <span class="stab__dot"></span>${SERIES[key].label}
+          </button>`;
         }
       });
       tabsEl.innerHTML = html;
@@ -333,13 +314,14 @@
     (function initTank() {
       const tank = document.getElementById("tank");
       const DEPTHS = [
-        { scale: 0.15, opacity: 0.08, speed: 58, blur: 4 },
-        { scale: 0.28, opacity: 0.13, speed: 44, blur: 2.5 },
-        { scale: 0.50, opacity: 0.20, speed: 32, blur: 1.5 },
-        { scale: 0.78, opacity: 0.28, speed: 22, blur: 0.5 },
-        { scale: 1.10, opacity: 0.38, speed: 14, blur: 0 },
-        { scale: 1.55, opacity: 0.50, speed: 9, blur: 0 },
+        { scale: 0.15, opacity: 0.08, speed: 22, blur: 4 },
+        { scale: 0.28, opacity: 0.13, speed: 16, blur: 2.5 },
+        { scale: 0.50, opacity: 0.20, speed: 12, blur: 1.5 },
+        { scale: 0.78, opacity: 0.28, speed:  8, blur: 0.5 },
+        { scale: 1.10, opacity: 0.38, speed:  5, blur: 0 },
+        { scale: 1.55, opacity: 0.50, speed:  4, blur: 0 },
       ];
+
       function pickDepth() {
         const r = Math.random();
         if (r < 0.12) return DEPTHS[5];
@@ -357,14 +339,14 @@
         const yPct = 8 + Math.random() * 78;
         const yDrift = (Math.random() - 0.5) * 12;
         const startX = goingRight ? -w - 20 : heroW + 20;
-        const endX = goingRight ? heroW + 20 : -w - 20;
+        const endX   = goingRight ? heroW + 20 : -w - 20;
         fish.style.cssText = `width:${w}px;opacity:${d.opacity};top:${yPct}%;left:${startX}px;filter:invert(1) brightness(0.65) sepia(1) hue-rotate(60deg) saturate(2) blur(${d.blur}px);transform:scaleX(${goingRight ? 1 : -1});transition:none;`;
         requestAnimationFrame(() => requestAnimationFrame(() => {
           fish.style.transition = `left ${dur}ms linear,top ${dur * .6}ms ease-in-out,opacity 1400ms ease,width 1400ms ease,filter 1400ms ease`;
           fish.style.left = endX + "px";
-          fish.style.top = `${Math.min(Math.max(yPct + yDrift, 5), 90)}%`;
+          fish.style.top  = `${Math.min(Math.max(yPct + yDrift, 5), 90)}%`;
         }));
-        setTimeout(() => { goingRight = !goingRight; swim(); }, dur + 400);
+        setTimeout(() => { goingRight = !goingRight; swim(); }, dur + 100);
       }
       setTimeout(swim, 500);
 
@@ -382,17 +364,21 @@
       const heroEl = document.getElementById("home");
       heroEl.addEventListener("mousemove", e => {
         const r = e.currentTarget.getBoundingClientRect();
-        tx = (e.clientX - r.left) / r.width - .5; ty = (e.clientY - r.top) / r.height - .5;
+        tx = (e.clientX - r.left) / r.width - .5;
+        ty = (e.clientY - r.top)  / r.height - .5;
       });
       heroEl.addEventListener("mouseleave", () => { tx = 0; ty = 0; });
       if (window.DeviceOrientationEvent) {
         window.addEventListener("deviceorientation", e => {
-          if (e.gamma !== null) { tx = Math.max(-.5, Math.min(.5, e.gamma / 30)); ty = Math.max(-.5, Math.min(.5, (e.beta - 45) / 30)); }
+          if (e.gamma !== null) {
+            tx = Math.max(-.5, Math.min(.5, e.gamma / 30));
+            ty = Math.max(-.5, Math.min(.5, (e.beta - 45) / 30));
+          }
         });
       }
       (function lerp() {
         const ease = 0.055; cx += (tx - cx) * ease; cy += (ty - cy) * ease;
-        tank.style.transform = `translate(${cx * -30}px,${cy * -15}px)`;
+        tank.style.transform    = `translate(${cx * -30}px,${cy * -15}px)`;
         heroContent.style.transform = `translate(${cx * 10}px,${cy * 6}px)`;
         requestAnimationFrame(lerp);
       })();
@@ -413,8 +399,8 @@
         ? { label: "All Products", desc: "Everything in the store." }
         : (SERIES[active] || { label: active, desc: "" });
 
-      document.getElementById("stripName").textContent = info.label;
-      document.getElementById("stripDesc").textContent = info.desc;
+      document.getElementById("stripName").textContent  = info.label;
+      document.getElementById("stripDesc").textContent  = info.desc;
       document.getElementById("stripCount").textContent = products.length;
 
       g.innerHTML = "";
@@ -427,27 +413,24 @@
         card.className = "card";
         card.style.animationDelay = `${i * 0.07}s`;
         card.innerHTML = `
-        <div class="card__img">
-          ${coverSrc
-            ? `<img src="${coverSrc}" alt="${p.name}" loading="lazy"
-                onerror="this.closest('.card__img').classList.add('card__img--missing');this.style.display='none'"/>`
-            : ""}
-          <div class="card__missing-msg">Add image paths to<br/>the imgs: [ ] list for<br/><em>${p.id}</em></div>
-          <div class="card__hover-hint"><span>View Details</span></div>
-          <span class="card__chip">${SERIES[p.series] ? SERIES[p.series].label : p.series}</span>
-        </div>
-        <div class="card__info">
-          <h3 class="card__name">${p.name}</h3>
-          <div class="card__foot">
-            <span class="card__price">${p.price}</span>
-            <span class="card__cta-hint">Tap to explore</span>
+          <div class="card__img">
+            ${coverSrc
+              ? `<img src="${coverSrc}" alt="${p.name}" loading="lazy"
+                  onerror="this.closest('.card__img').classList.add('card__img--missing');this.style.display='none'"/>`
+              : ""}
+            <div class="card__missing-msg">No images found.<br/>Check that <em>${p.folder || p.id}</em><br/>folder exists &amp; has Shirt 1.png</div>
+            <div class="card__hover-hint"><span>View Details</span></div>
+            <span class="card__chip">${SERIES[p.series] ? SERIES[p.series].label : p.series}</span>
           </div>
-        </div>`;
+          <div class="card__info">
+            <h3 class="card__name">${p.name}</h3>
+            <div class="card__foot">
+              <span class="card__price">${p.price}</span>
+              <span class="card__cta-hint">Tap to explore</span>
+            </div>
+          </div>`;
 
-        // Show missing state if no images listed
-        if (!coverSrc) {
-          card.querySelector(".card__img").classList.add("card__img--missing");
-        }
+        if (!coverSrc) card.querySelector(".card__img").classList.add("card__img--missing");
 
         card.addEventListener("click", () => openXCard(p, imgs));
         g.appendChild(card);
@@ -460,9 +443,9 @@
 
     function openXCard(p, imgs) {
       currentImgs = imgs || []; currentImgIndex = 0;
-      document.getElementById("xcardName").textContent = p.name;
+      document.getElementById("xcardName").textContent  = p.name;
       document.getElementById("xcardPrice").textContent = p.price;
-      document.getElementById("xcardDesc").textContent = p.desc;
+      document.getElementById("xcardDesc").textContent  = p.desc;
       document.getElementById("xcardSeries").textContent = SERIES[p.series] ? SERIES[p.series].label : p.series;
       document.getElementById("xcardBuy").href = p.url;
       setMainImg(0);
@@ -501,12 +484,13 @@
 
     document.getElementById("xcardClose").addEventListener("click", e => { e.stopPropagation(); closeXCard(); });
     document.getElementById("xcardBg").addEventListener("click", e => { if (e.target === e.currentTarget) closeXCard(); });
-    document.getElementById("xcardBuy").addEventListener("click", e => e.stopPropagation());
 
+
+    /* ── Keyboard & Swipe ───────────────────────────────────────── */
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") closeXCard();
       if (e.key === "ArrowRight" && currentImgs.length > 1) setMainImg((currentImgIndex + 1) % currentImgs.length);
-      if (e.key === "ArrowLeft" && currentImgs.length > 1) setMainImg((currentImgIndex - 1 + currentImgs.length) % currentImgs.length);
+      if (e.key === "ArrowLeft"  && currentImgs.length > 1) setMainImg((currentImgIndex - 1 + currentImgs.length) % currentImgs.length);
     });
 
     let touchStartX = 0;
@@ -514,11 +498,13 @@
     document.getElementById("xcardMainImg").addEventListener("touchend", e => {
       const diff = touchStartX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 40 && currentImgs.length > 1)
-        setMainImg(diff > 0 ? (currentImgIndex + 1) % currentImgs.length : (currentImgIndex - 1 + currentImgs.length) % currentImgs.length);
+        setMainImg(diff > 0
+          ? (currentImgIndex + 1) % currentImgs.length
+          : (currentImgIndex - 1 + currentImgs.length) % currentImgs.length);
     }, { passive: true });
 
 
-    /* ── Nav ────────────────────────────────────────────────────── */
+    /* ── Nav scroll ─────────────────────────────────────────────── */
     window.addEventListener("scroll", () => {
       document.getElementById("nav").classList.toggle("scrolled", window.scrollY > 40);
     });
@@ -529,8 +515,19 @@
       });
     });
 
-    buildTabs();
-    renderGrid();
+
+    /* ── Boot: probe folders → build site → hide loader ────────── */
+    (async () => {
+      await resolveAllProducts();
+
+      buildTabs();
+      renderGrid();
+
+      // Fade out the loading screen
+      const overlay = document.getElementById("loadingOverlay");
+      overlay.classList.add("fade-out");
+      setTimeout(() => overlay.remove(), 600);
+    })();
 
   </script>
 </body>
