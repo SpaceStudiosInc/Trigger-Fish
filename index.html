@@ -21,20 +21,15 @@
       font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
       color: #3d7a3d;
     }
-    .loading__bar-wrap { position: relative; width: 160px; padding-top: 36px; }
     .loading__logo {
-      position: absolute; top: 0; left: -24px;
       width: 48px; height: 48px; object-fit: contain;
       filter: invert(1) brightness(0.75) sepia(1) hue-rotate(60deg) saturate(2);
-      transition: left .3s ease;
       animation: loadPulse 1.4s ease-in-out infinite;
     }
     @keyframes loadPulse {
       0%, 100% { opacity: 0.5; transform: scale(0.92); }
       50%       { opacity: 1;   transform: scale(1.08); }
     }
-    .loading__bar { width: 100%; height: 2px; background: rgba(61,122,61,0.2); border-radius: 2px; overflow: hidden; }
-    .loading__bar-fill { height: 100%; width: 0%; background: #5aaa5a; border-radius: 2px; transition: width .3s ease; }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -44,13 +39,8 @@
 <body>
 
   <div id="loadingOverlay">
-    <span class="loading__text">TriggerFish Loading…</span>
-    <div class="loading__bar-wrap">
-      <img src="logo.png" alt="" class="loading__logo" id="loadLogo" />
-      <div class="loading__bar">
-        <div class="loading__bar-fill" id="loadBar"></div>
-      </div>
-    </div>
+    <span class="loading__text">TriggerFish</span>
+    <img src="logo.png" alt="" class="loading__logo" />
   </div>
 
   <nav class="nav" id="nav">
@@ -62,7 +52,6 @@
       <li><a href="#home">Home</a></li>
       <li><a href="#shop">Shop</a></li>
     </ul>
-  
   </nav>
 
   <section class="hero" id="home">
@@ -127,7 +116,7 @@
 
       <button class="xcard__close" id="xcardClose" aria-label="Close">✕</button>
 
-      <!-- DESKTOP layout: two column -->
+      <!-- DESKTOP layout -->
       <div class="xcard__gallery" id="xcardGallery">
         <div class="xcard__img-main">
           <img id="xcardMainImg" src="" alt="" />
@@ -151,15 +140,10 @@
         <p class="xcard__note">Secure checkout on Printful</p>
       </div>
 
-      <!-- MOBILE layout: full-screen swiper with bottom overlay -->
+      <!-- MOBILE layout -->
       <div class="xcard__mobile" id="xcardMobile">
-        <!-- Horizontally scrollable image strip -->
         <div class="xcard__swiper" id="xcardSwiper"></div>
-
-        <!-- Dot indicators -->
         <div class="xcard__dots" id="xcardDots"></div>
-
-        <!-- Bottom overlay panel -->
         <div class="xcard__overlay">
           <span class="xcard__ov-series" id="xcardOvSeries"></span>
           <div class="xcard__ov-header">
@@ -179,58 +163,17 @@
 
   <script>
 
-    const SERIES = {
-     
-      "tshirts": { label: "Graphic T's",  desc: "" },
-      "pattens": { label: "Pattens",      desc: "Pattens of Iconic weapons" },
-      "bible": { label: "Bible",      desc: "Bible Inspired" },
-    };
+    // ─────────────────────────────────────────────────────────────
+    //  THIS FILE NEVER NEEDS TO BE EDITED.
+    //  To add / change shirts, edit products.json only.
+    // ─────────────────────────────────────────────────────────────
 
-    const PRODUCTS = [
-      { id: "logo",    series: "tshirts", name: "Logo Tee",     price: "$27.00", desc: "The OG. Classic Triggerfish logo on heavyweight cotton. Clean, bold, unmistakable.", url: "https://www.printful.com/product-template/100357946/85c29c663b69ae477463e8110f1fd87d", folder: "logo" },
-      { id: "shh",     series: "pattens", name: "Shh",           price: "$28.00", desc: "Ph Ph Ph Ph", url: "https://www.printful.com/product-template/100356784/9979049073b248095bea52e22d84b594", folder: "shh" },
-      { id: "stoner",  series: "pattens", name: "Stoner",        price: "$28.00", desc: "Master Piece", url: "https://www.printful.com/product-template/100357537/68eff238032029c38d2be864ca36bd74", folder: "stoner" },
-       { id: "lentils",  series: "bible", name: "Lentils",        price: "$28.00", desc: "2 Samuel 23", url: "https://www.printful.com/product-template/100634807/c954da38d27f172da482bcd984a9aef6", folder: "lentils" },
-      { id: "jawbone",  series: "bible", name: "Jawbone",        price: "$28.00", desc: "Judges 15", url: "https://www.printful.com/product-template/100637830/fdcf9a6ea7871b0f315a1b4be8201db3", folder: "jawbone" },
-    ];
-
-    /* ── Image probing ── */
-    function probeImage(src) {
-      return new Promise(resolve => {
-        const img = new Image();
-        img.onload  = () => resolve(true);
-        img.onerror = () => resolve(false);
-        img.src = src;
-      });
-    }
-    async function probeFolder(folder, max = 40) {
-      const imgs = [];
-      for (let i = 1; i <= max; i++) {
-        const src = `${folder}/Shirt ${i}.png`;
-        if (!await probeImage(src)) break;
-        imgs.push(src);
-      }
-      return imgs;
-    }
-    async function resolveAllProducts() {
-      const loadBar  = document.getElementById("loadBar");
-      const loadLogo = document.getElementById("loadLogo");
-      const total = PRODUCTS.filter(p => p.folder && !p.imgs).length;
-      let done = 0;
-      await Promise.all(PRODUCTS.map(async p => {
-        if (p.folder && !p.imgs) {
-          p.imgs = await probeFolder(p.folder);
-          done++;
-          const pct = total > 0 ? Math.round((done / total) * 100) : 100;
-          loadBar.style.width = `${pct}%`;
-          loadLogo.style.left = `calc(${pct}% - 24px)`;
-        }
-      }));
-    }
+    let SERIES   = {};
+    let PRODUCTS = [];
 
     /* ── Tabs ── */
     function buildTabs() {
-      const used = [...new Set(PRODUCTS.map(p => p.series))];
+      const used   = [...new Set(PRODUCTS.map(p => p.series))];
       const tabsEl = document.getElementById("seriesTabs");
       let html = `<button class="stab active" data-series="all">All</button>`;
       used.forEach(key => {
@@ -247,86 +190,15 @@
       });
     }
 
-    /* ── Fish Tank ── */
-    (function initTank() {
-      const tank = document.getElementById("tank");
-      const DEPTHS = [
-        { scale: 0.15, opacity: 0.08, speed: 22, blur: 4 },
-        { scale: 0.28, opacity: 0.13, speed: 16, blur: 2.5 },
-        { scale: 0.50, opacity: 0.20, speed: 12, blur: 1.5 },
-        { scale: 0.78, opacity: 0.28, speed:  8, blur: 0.5 },
-        { scale: 1.10, opacity: 0.38, speed:  5, blur: 0 },
-        { scale: 1.55, opacity: 0.50, speed:  4, blur: 0 },
-      ];
-      function pickDepth() {
-        const r = Math.random();
-        if (r < 0.12) return DEPTHS[5];
-        if (r < 0.22) return DEPTHS[0];
-        return DEPTHS[Math.floor(Math.random() * DEPTHS.length)];
-      }
-      const fish = document.createElement("img");
-      fish.src = "Logo-straight.png"; fish.alt = ""; fish.className = "tank__fish";
-      tank.appendChild(fish);
-      const BASE_W = 240;
-      let goingRight = Math.random() > 0.5;
-      function swim() {
-        const d = pickDepth(), heroW = tank.offsetWidth;
-        const w = Math.round(BASE_W * d.scale), dur = d.speed * 1000;
-        const yPct = 8 + Math.random() * 78;
-        const yDrift = (Math.random() - 0.5) * 12;
-        const startX = goingRight ? -w - 20 : heroW + 20;
-        const endX   = goingRight ? heroW + 20 : -w - 20;
-        fish.style.cssText = `width:${w}px;opacity:${d.opacity};top:${yPct}%;left:${startX}px;filter:invert(1) brightness(0.65) sepia(1) hue-rotate(60deg) saturate(2) blur(${d.blur}px);transform:scaleX(${goingRight ? 1 : -1});transition:none;`;
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          fish.style.transition = `left ${dur}ms linear,top ${dur * .6}ms ease-in-out,opacity 1400ms ease,width 1400ms ease,filter 1400ms ease`;
-          fish.style.left = endX + "px";
-          fish.style.top  = `${Math.min(Math.max(yPct + yDrift, 5), 90)}%`;
-        }));
-        setTimeout(() => { goingRight = !goingRight; swim(); }, dur + 100);
-      }
-      setTimeout(swim, 500);
-      const caustics = document.getElementById("caustics");
-      for (let i = 0; i < 9; i++) {
-        const c = document.createElement("div");
-        c.className = "caustic";
-        const sz = 70 + Math.random() * 220;
-        c.style.cssText = `width:${sz}px;height:${sz * .42}px;left:${Math.random() * 100}%;top:${Math.random() * 100}%;animation-delay:${Math.random() * 9}s;animation-duration:${7 + Math.random() * 7}s;`;
-        caustics.appendChild(c);
-      }
-      const heroContent = document.getElementById("heroContent");
-      let tx = 0, ty = 0, cx = 0, cy = 0;
-      const heroEl = document.getElementById("home");
-      heroEl.addEventListener("mousemove", e => {
-        const r = e.currentTarget.getBoundingClientRect();
-        tx = (e.clientX - r.left) / r.width - .5;
-        ty = (e.clientY - r.top)  / r.height - .5;
-      });
-      heroEl.addEventListener("mouseleave", () => { tx = 0; ty = 0; });
-      if (window.DeviceOrientationEvent) {
-        window.addEventListener("deviceorientation", e => {
-          if (e.gamma !== null) {
-            tx = Math.max(-.5, Math.min(.5, e.gamma / 30));
-            ty = Math.max(-.5, Math.min(.5, (e.beta - 45) / 30));
-          }
-        });
-      }
-      (function lerp() {
-        const ease = 0.055; cx += (tx - cx) * ease; cy += (ty - cy) * ease;
-        tank.style.transform        = `translate(${cx * -30}px,${cy * -15}px)`;
-        heroContent.style.transform = `translate(${cx * 10}px,${cy * 6}px)`;
-        requestAnimationFrame(lerp);
-      })();
-    })();
-
     /* ── Grid ── */
     let active = "all";
     function filtered() {
       return active === "all" ? PRODUCTS : PRODUCTS.filter(p => p.series === active);
     }
     function renderGrid() {
-      const g = document.getElementById("grid");
+      const g        = document.getElementById("grid");
       const products = filtered();
-      const info = active === "all"
+      const info     = active === "all"
         ? { label: "All Products", desc: "Everything in the store." }
         : (SERIES[active] || { label: active, desc: "" });
       document.getElementById("stripName").textContent  = info.label;
@@ -334,15 +206,15 @@
       document.getElementById("stripCount").textContent = products.length;
       g.innerHTML = "";
       products.forEach((p, i) => {
-        const imgs = p.imgs ? p.imgs.filter(Boolean) : [];
+        const imgs     = (p.imgs || []).filter(Boolean);
         const coverSrc = imgs.length ? imgs[0] : "";
-        const card = document.createElement("div");
+        const card     = document.createElement("div");
         card.className = "card";
         card.style.animationDelay = `${i * 0.07}s`;
         card.innerHTML = `
           <div class="card__img">
             ${coverSrc ? `<img src="${coverSrc}" alt="${p.name}" loading="lazy" onerror="this.closest('.card__img').classList.add('card__img--missing');this.style.display='none'"/>` : ""}
-            <div class="card__missing-msg">No images found.<br/>Check that <em>${p.folder || p.id}</em><br/>folder exists &amp; has Shirt 1.png</div>
+            <div class="card__missing-msg">No images found.<br/>Check the <em>products/${p.id}/</em> folder.</div>
             <div class="card__hover-hint"><span>View Details</span></div>
             <span class="card__chip">${SERIES[p.series] ? SERIES[p.series].label : p.series}</span>
           </div>
@@ -361,25 +233,22 @@
 
     /* ── Expanded Card ── */
     let currentImgs = [], currentImgIndex = 0;
-    const isMobile = () => window.innerWidth <= 600;
+    const isMobile  = () => window.innerWidth <= 600;
 
     function openXCard(p, imgs) {
       currentImgs = imgs || []; currentImgIndex = 0;
 
       if (isMobile()) {
-        /* ── MOBILE: swiper + bottom overlay ── */
         document.getElementById("xcardGallery").style.display = "none";
         document.getElementById("xcardInfo").style.display    = "none";
         document.getElementById("xcardMobile").style.display  = "flex";
 
-        // Overlay text
         document.getElementById("xcardOvSeries").textContent = SERIES[p.series] ? SERIES[p.series].label : p.series;
         document.getElementById("xcardOvName").textContent   = p.name;
         document.getElementById("xcardOvPrice").textContent  = p.price;
         document.getElementById("xcardOvDesc").textContent   = p.desc;
-        document.getElementById("xcardOvBuy").href            = p.url;
+        document.getElementById("xcardOvBuy").href           = p.url;
 
-        // Build swiper slides
         const swiper = document.getElementById("xcardSwiper");
         swiper.innerHTML = "";
         (currentImgs.length ? currentImgs : [""]).forEach(src => {
@@ -393,7 +262,6 @@
           swiper.appendChild(slide);
         });
 
-        // Build dots
         const dotsEl = document.getElementById("xcardDots");
         dotsEl.innerHTML = "";
         if (currentImgs.length > 1) {
@@ -403,8 +271,6 @@
             dotsEl.appendChild(d);
           });
           dotsEl.style.display = "flex";
-
-          // Sync dots to scroll position
           let scrollTimer;
           swiper.addEventListener("scroll", () => {
             clearTimeout(scrollTimer);
@@ -419,7 +285,6 @@
         }
 
       } else {
-        /* ── DESKTOP: classic two-column layout ── */
         document.getElementById("xcardGallery").style.display = "";
         document.getElementById("xcardInfo").style.display    = "";
         document.getElementById("xcardMobile").style.display  = "none";
@@ -428,7 +293,7 @@
         document.getElementById("xcardPrice").textContent  = p.price;
         document.getElementById("xcardDesc").textContent   = p.desc;
         document.getElementById("xcardSeries").textContent = SERIES[p.series] ? SERIES[p.series].label : p.series;
-        document.getElementById("xcardBuy").href = p.url;
+        document.getElementById("xcardBuy").href           = p.url;
         setMainImg(0);
 
         const thumbsEl = document.getElementById("xcardThumbs");
@@ -477,7 +342,7 @@
 
     let touchStartX = 0;
     document.getElementById("xcardMainImg").addEventListener("touchstart", e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-    document.getElementById("xcardMainImg").addEventListener("touchend", e => {
+    document.getElementById("xcardMainImg").addEventListener("touchend",   e => {
       const diff = touchStartX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 40 && currentImgs.length > 1)
         setMainImg(diff > 0
@@ -496,9 +361,86 @@
       });
     });
 
-    /* ── Boot ── */
+    /* ── Fish Tank ── */
+    (function initTank() {
+      const tank   = document.getElementById("tank");
+      const DEPTHS = [
+        { scale: 0.15, opacity: 0.08, speed: 22, blur: 4   },
+        { scale: 0.28, opacity: 0.13, speed: 16, blur: 2.5 },
+        { scale: 0.50, opacity: 0.20, speed: 12, blur: 1.5 },
+        { scale: 0.78, opacity: 0.28, speed:  8, blur: 0.5 },
+        { scale: 1.10, opacity: 0.38, speed:  5, blur: 0   },
+        { scale: 1.55, opacity: 0.50, speed:  4, blur: 0   },
+      ];
+      function pickDepth() {
+        const r = Math.random();
+        if (r < 0.12) return DEPTHS[5];
+        if (r < 0.22) return DEPTHS[0];
+        return DEPTHS[Math.floor(Math.random() * DEPTHS.length)];
+      }
+      const fish = document.createElement("img");
+      fish.src = "Logo-straight.png"; fish.alt = ""; fish.className = "tank__fish";
+      tank.appendChild(fish);
+      const BASE_W = 240;
+      let goingRight = Math.random() > 0.5;
+      function swim() {
+        const d = pickDepth(), heroW = tank.offsetWidth;
+        const w = Math.round(BASE_W * d.scale), dur = d.speed * 1000;
+        const yPct   = 8 + Math.random() * 78;
+        const yDrift = (Math.random() - 0.5) * 12;
+        const startX = goingRight ? -w - 20 : heroW + 20;
+        const endX   = goingRight ? heroW + 20 : -w - 20;
+        fish.style.cssText = `width:${w}px;opacity:${d.opacity};top:${yPct}%;left:${startX}px;filter:invert(1) brightness(0.65) sepia(1) hue-rotate(60deg) saturate(2) blur(${d.blur}px);transform:scaleX(${goingRight ? 1 : -1});transition:none;`;
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          fish.style.transition = `left ${dur}ms linear,top ${dur * .6}ms ease-in-out,opacity 1400ms ease,width 1400ms ease,filter 1400ms ease`;
+          fish.style.left = endX + "px";
+          fish.style.top  = `${Math.min(Math.max(yPct + yDrift, 5), 90)}%`;
+        }));
+        setTimeout(() => { goingRight = !goingRight; swim(); }, dur + 100);
+      }
+      setTimeout(swim, 500);
+      const caustics = document.getElementById("caustics");
+      for (let i = 0; i < 9; i++) {
+        const c  = document.createElement("div");
+        c.className = "caustic";
+        const sz = 70 + Math.random() * 220;
+        c.style.cssText = `width:${sz}px;height:${sz * .42}px;left:${Math.random() * 100}%;top:${Math.random() * 100}%;animation-delay:${Math.random() * 9}s;animation-duration:${7 + Math.random() * 7}s;`;
+        caustics.appendChild(c);
+      }
+      const heroContent = document.getElementById("heroContent");
+      let tx = 0, ty = 0, cx = 0, cy = 0;
+      const heroEl = document.getElementById("home");
+      heroEl.addEventListener("mousemove", e => {
+        const r = e.currentTarget.getBoundingClientRect();
+        tx = (e.clientX - r.left) / r.width - .5;
+        ty = (e.clientY - r.top)  / r.height - .5;
+      });
+      heroEl.addEventListener("mouseleave", () => { tx = 0; ty = 0; });
+      if (window.DeviceOrientationEvent) {
+        window.addEventListener("deviceorientation", e => {
+          if (e.gamma !== null) {
+            tx = Math.max(-.5, Math.min(.5, e.gamma / 30));
+            ty = Math.max(-.5, Math.min(.5, (e.beta - 45) / 30));
+          }
+        });
+      }
+      (function lerp() {
+        const ease = 0.055; cx += (tx - cx) * ease; cy += (ty - cy) * ease;
+        tank.style.transform        = `translate(${cx * -30}px,${cy * -15}px)`;
+        heroContent.style.transform = `translate(${cx * 10}px,${cy * 6}px)`;
+        requestAnimationFrame(lerp);
+      })();
+    })();
+
+    /* ── Boot: fetch products.json, then build the page ── */
     (async () => {
-      await resolveAllProducts();
+      try {
+        const data = await fetch("products.json").then(r => r.json());
+        SERIES   = data.series;
+        PRODUCTS = data.products;
+      } catch (e) {
+        console.error("Failed to load products.json:", e);
+      }
       buildTabs();
       renderGrid();
       const overlay = document.getElementById("loadingOverlay");
