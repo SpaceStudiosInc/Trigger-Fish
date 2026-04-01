@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>About — Triggerfish</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@700;800&family=Outfit:wght@300;400;500&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="stylesheet.css"/>
+  <style>
+    html, body { height: 100%; overflow: hidden; }
+
+    .about-shell {
+      position: fixed;
+      inset: 68px 0 0 0;
+      display: grid;
+      grid-template-columns: 48% 52%;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    /* ── LEFT PANEL ── */
+    .al {
+      position: relative;
+      overflow: hidden;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(28px, 5vw, 72px);
+    }
+
+    .al__grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(107,121,48,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(107,121,48,.04) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: radial-gradient(ellipse 80% 80% at 30% 50%, black 30%, transparent 100%);
+    }
+    .al__scan {
+      position: absolute; inset: 0; pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.035) 3px, rgba(0,0,0,.035) 4px);
+    }
+    .al__glow {
+      position: absolute; top: 40%; left: -10%;
+      width: 60%; aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle, rgba(107,121,48,.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .al__corner { position: absolute; width: 32px; height: 32px; pointer-events: none; }
+    .al__corner--tl { top: 16px; left: 16px; border-top: 1px solid rgba(107,121,48,.35); border-left: 1px solid rgba(107,121,48,.35); }
+    .al__corner--tr { top: 16px; right: 16px; border-top: 1px solid rgba(107,121,48,.35); border-right: 1px solid rgba(107,121,48,.35); }
+    .al__corner--bl { bottom: 16px; left: 16px; border-bottom: 1px solid rgba(107,121,48,.35); border-left: 1px solid rgba(107,121,48,.35); }
+    .al__corner--br { bottom: 16px; right: 16px; border-bottom: 1px solid rgba(107,121,48,.35); border-right: 1px solid rgba(107,121,48,.35); }
+
+    .al__content { position: relative; z-index: 2; }
+
+    .al__glyph { font-size: 16px; color: var(--red); opacity: .7; margin-bottom: 20px; display: block; animation: fadeUp .6s ease .05s both; }
+    .al__eyebrow {
+      font-family: var(--mono); font-size: 9px; letter-spacing: .32em;
+      text-transform: uppercase; color: var(--red);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px; animation: fadeUp .6s ease .1s both;
+    }
+    .al__eyebrow::before { content: ''; display: inline-block; width: 18px; height: 1px; background: var(--red); }
+    .al__title {
+      font-family: var(--display);
+      font-size: clamp(44px, 7vw, 96px);
+      letter-spacing: .04em; line-height: .92;
+      color: var(--text); margin-bottom: 28px;
+      animation: fadeUp .6s ease .18s both;
+    }
+    .al__body {
+      font-family: var(--body); font-size: 14px;
+      color: rgba(237,229,214,.45); line-height: 1.85;
+      max-width: 480px; margin-bottom: 28px;
+      animation: fadeUp .6s ease .28s both;
+    }
+    .al__refs {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      margin-bottom: 36px; animation: fadeUp .6s ease .36s both;
+    }
+    .al__ref {
+      font-family: var(--mono); font-size: 9px; letter-spacing: .14em;
+      text-transform: uppercase; border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 2px; color: var(--muted);
+      transition: border-color .16s ease, color .16s ease;
+    }
+    .al__ref:hover { border-color: var(--border-a); color: var(--cream); }
+    .al__cta { animation: fadeUp .6s ease .44s both; }
+    .al__copy {
+      position: absolute; bottom: 20px; left: clamp(28px, 5vw, 72px);
+      font-family: var(--mono); font-size: 8px; letter-spacing: .14em;
+      color: var(--dim); z-index: 2;
+    }
+
+    /* ── RIGHT PANEL ── */
+    .ar {
+      overflow-y: auto; overflow-x: hidden;
+      scrollbar-width: thin; scrollbar-color: var(--bg4) transparent;
+      background: var(--bg2);
+    }
+    .ar::-webkit-scrollbar { width: 3px; }
+    .ar::-webkit-scrollbar-track { background: transparent; }
+    .ar::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 2px; }
+
+    .ar__section { padding: clamp(36px, 5vw, 64px) clamp(28px, 5vw, 64px); border-bottom: 1px solid var(--border); }
+    .ar__section:last-child { border-bottom: none; }
+
+    .ar__eyebrow {
+      font-family: var(--mono); font-size: 9px; letter-spacing: .28em;
+      text-transform: uppercase; color: var(--red);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+    }
+    .ar__eyebrow::before { content: ''; display: inline-block; width: 14px; height: 1px; background: var(--red); }
+    .ar__title { font-family: var(--display); font-size: clamp(28px, 3.5vw, 48px); letter-spacing: .06em; line-height: 1; color: var(--text); margin-bottom: 20px; }
+    .ar__body { font-family: var(--body); font-size: 14px; color: rgba(237,229,214,.48); line-height: 1.85; }
+    .ar__body p + p { margin-top: 16px; }
+
+    .ar__founder-photo {
+      width: 100%; aspect-ratio: 4/5; max-width: 200px;
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 2px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      margin-bottom: 20px; overflow: hidden;
+    }
+    .ar__founder-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ar__founder-photo-ph { font-family: var(--mono); font-size: 8px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .ar__founder-name { font-family: var(--display); font-size: 28px; letter-spacing: .06em; color: var(--text); margin-bottom: 4px; }
+    .ar__founder-role { font-family: var(--mono); font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--red); margin-bottom: 18px; }
+
+    .ar__cta-section { padding: clamp(36px, 5vw, 64px) clamp(28px, 5vw, 64px); display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+    .ar__cta-label { font-family: var(--mono); font-size: 9px; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); }
+    .ar__cta-title { font-family: var(--display); font-size: clamp(28px, 3.5vw, 48px); letter-spacing: .04em; line-height: 1; color: var(--text); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      html, body { height: auto; overflow: auto; }
+      .about-shell {
+        position: static; padding-top: 68px;
+        grid-template-columns: 1fr; height: auto; overflow: visible;
+      }
+      .al { min-height: 100svh; border-right: none; border-bottom: 1px solid var(--border); }
+      .ar { overflow: visible; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav__left">
+    <a class="nav__brand" href="index.html">
+      <img src="logo.png" alt="Triggerfish" class="nav__logo"/>
+      <span class="nav__wordmark">TRIGGERFISH</span>
+    </a>
+  </div>
+  <ul class="nav__links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="browse.html">Browse</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <button class="nav__hamburger" id="navHamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<nav class="nav__drawer" id="navDrawer" aria-label="Mobile navigation">
+  <div class="nav__drawer-inner">
+    <a class="nav__drawer-link" href="index.html">Home</a>
+    <a class="nav__drawer-link" href="browse.html">Browse</a>
+    <a class="nav__drawer-link" href="about.html">About</a>
+  </div>
+  <div class="nav__drawer-foot">© 2026 Triggerfish · Ships worldwide</div>
+</nav>
+
+<div class="about-shell">
+
+  <!-- LEFT: MANIFESTO -->
+  <div class="al">
+    <div class="al__grid"></div>
+    <div class="al__scan"></div>
+    <div class="al__glow"></div>
+    <div class="al__corner al__corner--tl"></div>
+    <div class="al__corner al__corner--tr"></div>
+    <div class="al__corner al__corner--bl"></div>
+    <div class="al__corner al__corner--br"></div>
+
+    <div class="al__content">
+      <span class="al__glyph">✦</span>
+      <p class="al__eyebrow">The Calling</p>
+      <h1 class="al__title">WORK IN THE<br/>VALLEY<br/>OF DEATH</h1>
+      <div class="al__body">
+        <p>Not a tagline. A posture. These are clothes for people who show up anyway — who move through hard places without flinching, who do the work no one else wants to do.</p>
+        <p>Bold faith. Steady hands. Eyes forward.</p>
+      </div>
+      <div class="al__refs">
+        <span class="al__ref">2 Samuel 23</span>
+        <span class="al__ref">Judges 15</span>
+        <span class="al__ref">Genesis 6</span>
+      </div>
+      <div class="al__cta">
+        <a href="browse.html" class="btn btn--primary">Browse the Collection</a>
+      </div>
+    </div>
+
+    <span class="al__copy">© 2026 Triggerfish · Ships worldwide via Printful.</span>
+  </div>
+
+  <!-- RIGHT: DETAILS -->
+  <div class="ar">
+
+    <div class="ar__section">
+      <p class="ar__eyebrow">The Brand</p>
+      <h2 class="ar__title">ABOUT TRIGGERFISH</h2>
+      <div class="ar__body">
+        <p>Triggerfish is a biblical streetwear brand built around one idea: that the stories in scripture are not tame — they are raw, costly, and worth wearing on your chest.</p>
+        <p>Every design pulls from a specific passage. Lentils from 2 Samuel 23, where a man stood in a field and fought alone. Jawbone from Judges 15. Noah's MRAP from Genesis 6. These aren't decorations — they're declarations.</p>
+        <p>All pieces are printed on demand through Printful and shipped worldwide. Heavyweight cotton. Bold print. No compromises on quality.</p>
+      </div>
+    </div>
+
+    <div class="ar__section">
+      <p class="ar__eyebrow">The Founder</p>
+      <div class="ar__founder-photo">
+        <img src="Founder.png" alt="Nasseh, Founder of Triggerfish"/>
+      </div>
+      <h2 class="ar__founder-name">Nasseh</h2>
+      <p class="ar__founder-role">Founder &amp; Designer</p>
+      <div class="ar__body">
+        <p>I wanted to take biblical stories and add some tactical elements to it.</p>
+        <p>I hope you enjoy what I have made.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- EXPANDED CARD (needed for shared.js init) -->
+<div class="xcard-bg" id="xcardBg">
+  <div class="xcard">
+    <button class="xcard__close" id="xcardClose" aria-label="Close">✕</button>
+    <div class="xcard__gallery" id="xcardGallery"><div class="xcard__img-main"><img id="xcardMainImg" src="" alt=""/></div><div class="xcard__thumbs" id="xcardThumbs"></div></div>
+    <div class="xcard__info" id="xcardInfo">
+      <span class="xcard__series" id="xcardType"></span><h2 class="xcard__name" id="xcardName"></h2>
+      <p class="xcard__price" id="xcardPrice"></p><p class="xcard__desc" id="xcardDesc"></p>
+      <div class="xcard__rule"></div>
+      <ul class="xcard__perks"><li>— Heavyweight premium cotton</li><li>— Vibrant, durable print</li><li>— Ships worldwide via Printful</li></ul>
+      <a class="xcard__buy" id="xcardBuy" href="#" target="_blank" rel="noopener">Buy This →</a>
+      <p class="xcard__note">Secure checkout on Printful</p>
+    </div>
+    <div class="xcard__mobile" id="xcardMobile">
+      <div class="xcard__swiper" id="xcardSwiper"></div><div class="xcard__dots" id="xcardDots"></div>
+      <div class="xcard__overlay">
+        <span class="xcard__ov-series" id="xcardOvType"></span>
+        <div class="xcard__ov-header"><h2 class="xcard__ov-name" id="xcardOvName"></h2><span class="xcard__ov-price" id="xcardOvPrice"></span></div>
+        <p class="xcard__ov-desc" id="xcardOvDesc"></p>
+        <a class="xcard__ov-btn" id="xcardOvBuy" href="#" target="_blank" rel="noopener">Buy Now →</a>
+        <p class="xcard__ov-note">Ships worldwide · Secure checkout</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script>
+(async () => {
+  await loadProducts();
+  initShared();
+  document.querySelector('.nav__links a[href="about.html"]')?.classList.add('active');
+})();
+</script>
+</body>
+</html>

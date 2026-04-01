@@ -1,139 +1,142 @@
 {
-  "series": {
-    "tshirts": { "label": "Graphic T's",  "desc": "" },
-    "pattens": { "label": "Pattens",      "desc": "Pattens of Iconic weapons" },
-    "bible":   { "label": "Bible",        "desc": "Bible Inspired" }
+  "_readme": {
+    "how_to_add_a_product": "Copy any block inside 'products' and change the values. Set new:true to show it in New Arrivals. The id must be unique and match the folder name under products/.",
+    "image_convention": "Put product images in products/{id}/Shirt 1.png, Shirt 2.png, etc.",
+    "types_available": "tee | hoodie | hat — add more in the 'types' section if needed",
+    "url": "Paste your Printful product template link here"
   },
+
+  "types": {
+    "tee":    { "label": "T-Shirts", "desc": "Heavyweight premium cotton tees." },
+    "hoodie": { "label": "Hoodies",  "desc": "Midweight fleece, drop shoulder." },
+    "hat":    { "label": "Hats",     "desc": "Structured and unstructured caps." }
+  },
+
   "products": [
+
     {
-      "id":     "logo",
-      "series": "tshirts",
-      "name":   "Logo Tee",
-      "price":  "$27.00",
-      "desc":   "The OG. Classic Triggerfish logo on heavyweight cotton. Clean, bold, unmistakable.",
-      "url":    "https://www.printful.com/product-template/100357946/85c29c663b69ae477463e8110f1fd87d",
+      "id":    "logo",
+      "type":  "tee",
+      "name":  "Logo Tee",
+      "price": "$27.00",
+      "desc":  "The OG. Classic Triggerfish logo on heavyweight cotton. Clean, bold, unmistakable.",
+      "new":   false,
+      "url":   "https://www.printful.com/product-template/100357946/85c29c663b69ae477463e8110f1fd87d",
       "imgs": [
-        "assets/logo/Shirt 1.png",
-        "assets/logo/Shirt 2.png",
-        "assets/logo/Shirt 3.png",
-        "assets/logo/Shirt 4.png",
-        "assets/logo/Shirt 5.png",
-        "assets/logo/Shirt 6.png",
-        "assets/logo/Shirt 7.png",
-        "assets/logo/Shirt 8.png",
-        "assets/logo/Shirt 9.png",
-        "assets/logo/Shirt 10.png",
-        "assets/logo/Shirt 11.png",
-        "assets/logo/Shirt 12.png",
-        "assets/logo/Shirt 13.png",
-        "assets/logo/Shirt 14.png",
-        "assets/logo/Shirt 15.png",
-        "assets/logo/Shirt 16.png"
+        "products/logo/Shirt 1.png",  "products/logo/Shirt 2.png",
+        "products/logo/Shirt 3.png",  "products/logo/Shirt 4.png",
+        "products/logo/Shirt 5.png",  "products/logo/Shirt 6.png",
+        "products/logo/Shirt 7.png",  "products/logo/Shirt 8.png",
+        "products/logo/Shirt 9.png",  "products/logo/Shirt 10.png",
+        "products/logo/Shirt 11.png", "products/logo/Shirt 12.png",
+        "products/logo/Shirt 13.png", "products/logo/Shirt 14.png",
+        "products/logo/Shirt 15.png", "products/logo/Shirt 16.png"
       ]
     },
+
     {
-      "id":     "silencer",
-      "series": "pattens",
-      "name":   "silencer",
-      "price":  "$28.00",
-      "desc":   "Ph Ph Ph Ph",
-      "url":    "https://www.printful.com/product-template/100356784/9979049073b248095bea52e22d84b594",
+      "id":    "lentils",
+      "type":  "tee",
+      "name":  "Lentils",
+      "price": "$28.00",
+      "desc":  "2 Samuel 23",
+      "new":   true,
+      "url":   "https://www.printful.com/product-template/100634807/c954da38d27f172da482bcd984a9aef6",
       "imgs": [
-        "assets/silencer/Shirt 1.png",
-        "assets/silencer/Shirt 2.png",
-        "assets/silencer/Shirt 3.png",
-        "assets/silencer/Shirt 4.png",
-        "assets/silencer/Shirt 5.png",
-        "assets/silencer/Shirt 6.png",
-        "assets/silencer/Shirt 7.png",
-        "assets/silencer/Shirt 8.png",
-        "assets/silencer/Shirt 9.png",
-        "assets/silencer/Shirt 10.png",
-        "assets/silencer/Shirt 11.png",
-        "assets/silencer/Shirt 12.png",
-        "assets/silencer/Shirt 13.png",
-        "assets/silencer/Shirt 14.png",
-        "assets/silencer/Shirt 15.png",
-        "assets/silencer/Shirt 16.png"
+        "products/lentils/Shirt 1.png",  "products/lentils/Shirt 2.png",
+        "products/lentils/Shirt 3.png",  "products/lentils/Shirt 4.png",
+        "products/lentils/Shirt 5.png",  "products/lentils/Shirt 6.png",
+        "products/lentils/Shirt 7.png",  "products/lentils/Shirt 8.png",
+        "products/lentils/Shirt 9.png",  "products/lentils/Shirt 10.png",
+        "products/lentils/Shirt 11.png", "products/lentils/Shirt 12.png",
+        "products/lentils/Shirt 13.png", "products/lentils/Shirt 14.png",
+        "products/lentils/Shirt 15.png", "products/lentils/Shirt 16.png"
       ]
     },
+
     {
-      "id":     "stoner",
-      "series": "pattens",
-      "name":   "Stoner",
-      "price":  "$28.00",
-      "desc":   "Master Piece",
-      "url":    "https://www.printful.com/product-template/100357537/68eff238032029c38d2be864ca36bd74",
+      "id":    "jawbone",
+      "type":  "tee",
+      "name":  "Jawbone",
+      "price": "$28.00",
+      "desc":  "Judges 15",
+      "new":   true,
+      "url":   "https://www.printful.com/product-template/100637830/fdcf9a6ea7871b0f315a1b4be8201db3",
       "imgs": [
-        "assets/stoner/Shirt 1.png",
-        "assets/stoner/Shirt 2.png",
-        "assets/stoner/Shirt 3.png",
-        "assets/stoner/Shirt 4.png",
-        "assets/stoner/Shirt 5.png",
-        "assets/stoner/Shirt 6.png",
-        "assets/stoner/Shirt 7.png",
-        "assets/stoner/Shirt 8.png",
-        "assets/stoner/Shirt 9.png",
-        "assets/stoner/Shirt 10.png",
-        "assets/stoner/Shirt 11.png",
-        "assets/stoner/Shirt 12.png",
-        "assets/stoner/Shirt 13.png",
-        "assets/stoner/Shirt 14.png",
-        "assets/stoner/Shirt 15.png",
-        "assets/stoner/Shirt 16.png"
+        "products/jawbone/Shirt 1.png",  "products/jawbone/Shirt 2.png",
+        "products/jawbone/Shirt 3.png",  "products/jawbone/Shirt 4.png",
+        "products/jawbone/Shirt 5.png",  "products/jawbone/Shirt 6.png",
+        "products/jawbone/Shirt 7.png",  "products/jawbone/Shirt 8.png",
+        "products/jawbone/Shirt 9.png",  "products/jawbone/Shirt 10.png",
+        "products/jawbone/Shirt 11.png", "products/jawbone/Shirt 12.png",
+        "products/jawbone/Shirt 13.png", "products/jawbone/Shirt 14.png",
+        "products/jawbone/Shirt 15.png", "products/jawbone/Shirt 16.png"
       ]
     },
+
     {
-      "id":     "lentils",
-      "series": "bible",
-      "name":   "Lentils",
-      "price":  "$28.00",
-      "desc":   "2 Samuel 23",
-      "url":    "https://www.printful.com/product-template/100634807/c954da38d27f172da482bcd984a9aef6",
+      "id":    "mrap",
+      "type":  "tee",
+      "name":  "Noah's MRAP",
+      "price": "$28.00",
+      "desc":  "Genesis 6",
+      "new":   true,
+      "url":   "https://www.printful.com/product-template/100708835/8c463d21031056fb4e92f86091940764",
       "imgs": [
-        "assets/lentils/Shirt 1.png",
-        "assets/lentils/Shirt 2.png",
-        "assets/lentils/Shirt 3.png",
-        "assets/lentils/Shirt 4.png",
-        "assets/lentils/Shirt 5.png",
-        "assets/lentils/Shirt 6.png",
-        "assets/lentils/Shirt 7.png",
-        "assets/lentils/Shirt 8.png",
-        "assets/lentils/Shirt 9.png",
-        "assets/lentils/Shirt 10.png",
-        "assets/lentils/Shirt 11.png",
-        "assets/lentils/Shirt 12.png",
-        "assets/lentils/Shirt 13.png",
-        "assets/lentils/Shirt 14.png",
-        "assets/lentils/Shirt 15.png",
-        "assets/lentils/Shirt 16.png"
+        "products/mrap/Shirt 1.png",  "products/mrap/Shirt 2.png",
+        "products/mrap/Shirt 3.png",  "products/mrap/Shirt 4.png",
+        "products/mrap/Shirt 5.png",  "products/mrap/Shirt 6.png",
+        "products/mrap/Shirt 7.png",  "products/mrap/Shirt 8.png",
+        "products/mrap/Shirt 9.png",  "products/mrap/Shirt 10.png",
+        "products/mrap/Shirt 11.png", "products/mrap/Shirt 12.png",
+        "products/mrap/Shirt 13.png", "products/mrap/Shirt 14.png",
+        "products/mrap/Shirt 15.png", "products/mrap/Shirt 16.png"
       ]
     },
+
     {
-      "id":     "jawbone",
-      "series": "bible",
-      "name":   "Jawbone",
-      "price":  "$28.00",
-      "desc":   "Judges 15",
-      "url":    "https://www.printful.com/product-template/100637830/fdcf9a6ea7871b0f315a1b4be8201db3",
-      "imgs": [
-        "assets/jawbone/Shirt 1.png",
-        "assets/jawbone/Shirt 2.png",
-        "assets/jawbone/Shirt 3.png",
-        "assets/jawbone/Shirt 4.png",
-        "assets/jawbone/Shirt 5.png",
-        "assets/jawbone/Shirt 6.png",
-        "assets/jawbone/Shirt 7.png",
-        "assets/jawbone/Shirt 8.png",
-        "assets/jawbone/Shirt 9.png",
-        "assets/jawbone/Shirt 10.png",
-        "assets/jawbone/Shirt 11.png",
-        "assets/jawbone/Shirt 12.png",
-        "assets/jawbone/Shirt 13.png",
-        "assets/jawbone/Shirt 14.png",
-        "assets/jawbone/Shirt 15.png",
-        "assets/jawbone/Shirt 16.png"
-      ]
+      "id":    "widow",
+      "type":  "tee",
+      "name":  "The Widow's Oil",
+      "price": "$28.00",
+      "desc":  "2 Kings 4",
+      "new":   false,
+      "url":   "https://www.printful.com/",
+      "imgs":  ["products/widow/Shirt 1.png"]
+    },
+
+    {
+      "id":    "giant",
+      "type":  "tee",
+      "name":  "Another Giant",
+      "price": "$28.00",
+      "desc":  "2 Samuel 21 — there are still giants in the land.",
+      "new":   false,
+      "url":   "https://www.printful.com/",
+      "imgs":  ["products/giant/Shirt 1.png"]
+    },
+
+    {
+      "id":    "valley-hoodie",
+      "type":  "hoodie",
+      "name":  "Valley Hoodie",
+      "price": "$54.00",
+      "desc":  "Work in the valley of death. Midweight fleece, drop shoulder, washed black.",
+      "new":   false,
+      "url":   "https://www.printful.com/",
+      "imgs":  ["products/valley-hoodie/Hoodie 1.png"]
+    },
+
+    {
+      "id":    "logo-hat",
+      "type":  "hat",
+      "name":  "Logo Cap",
+      "price": "$32.00",
+      "desc":  "Structured 5-panel. Embroidered Triggerfish mark.",
+      "new":   false,
+      "url":   "https://www.printful.com/",
+      "imgs":  ["products/logo-hat/Hat 1.png"]
     }
+
   ]
 }

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Browse — Triggerfish</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@700;800&family=Outfit:wght@300;400;500&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="stylesheet.css"/>
+  <style>
+    html, body { height: auto; }
+
+    /* ── PAGE LAYOUT ── */
+    .browse-page {
+      padding-top: 72px;
+      min-height: 100svh;
+      background: var(--bg);
+    }
+
+    /* ── STICKY FILTER BAR ── */
+    .browse-bar {
+      position: sticky;
+      top: 62px; /* sits just under the nav */
+      z-index: 100;
+      background: rgba(7,7,7,0.96);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px clamp(16px, 4vw, 48px);
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+
+    .browse-bar__title {
+      font-family: var(--display); font-size: 22px; letter-spacing: .06em;
+      color: var(--text); line-height: 1; margin-right: 8px; flex-shrink: 0;
+    }
+
+    .browse-bar__divider {
+      width: 1px; height: 20px; background: var(--border); flex-shrink: 0;
+    }
+
+    .browse-bar__filters { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .browse-filter {
+      font-family: var(--mono); font-size: 9px; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--muted);
+      background: transparent; border: 1px solid var(--border); border-radius: 2px;
+      padding: 6px 13px; cursor: pointer; transition: all .18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .browse-filter:hover { border-color: var(--border-a); color: var(--text); }
+    .browse-filter.active { background: var(--cream); color: #0a0a0a; border-color: var(--cream); }
+
+    .browse-bar__count {
+      margin-left: auto;
+      font-family: var(--mono); font-size: 9px; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--dim); flex-shrink: 0;
+    }
+
+    /* ── GRID ── */
+    .browse-grid-wrap {
+      padding: clamp(20px, 3vw, 40px) clamp(16px, 4vw, 48px) 60px;
+    }
+
+    .browse-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    /* empty state */
+    .browse-empty {
+      grid-column: 1/-1;
+      padding: 80px 20px; text-align: center;
+      font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: .1em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .browse-bar { top: 56px; padding: 10px 14px; gap: 8px; }
+      .browse-bar__title { font-size: 18px; }
+      .browse-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .browse-grid-wrap { padding: 14px 12px 48px; }
+    }
+    @media (max-width: 360px) {
+      .browse-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav__left">
+    <a class="nav__brand" href="index.html">
+      <img src="logo.png" alt="Triggerfish" class="nav__logo"/>
+      <span class="nav__wordmark">TRIGGERFISH</span>
+    </a>
+  </div>
+  <ul class="nav__links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="browse.html">Browse</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <button class="nav__hamburger" id="navHamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<nav class="nav__drawer" id="navDrawer" aria-label="Mobile navigation">
+  <div class="nav__drawer-inner">
+    <a class="nav__drawer-link" href="index.html">Home</a>
+    <a class="nav__drawer-link" href="browse.html">Browse</a>
+    <a class="nav__drawer-link" href="about.html">About</a>
+  </div>
+  <div class="nav__drawer-foot">© 2026 Triggerfish · Ships worldwide</div>
+</nav>
+
+<!-- PAGE -->
+<div class="browse-page">
+
+  <!-- STICKY FILTER BAR -->
+  <div class="browse-bar">
+    <span class="browse-bar__title">BROWSE</span>
+    <div class="browse-bar__divider"></div>
+    <div class="browse-bar__filters" id="filterBtns"></div>
+    <span class="browse-bar__count" id="browseCount"></span>
+  </div>
+
+  <!-- CARD GRID -->
+  <div class="browse-grid-wrap">
+    <div class="browse-grid" id="browseGrid"></div>
+  </div>
+
+</div>
+
+<!-- EXPANDED CARD -->
+<div class="xcard-bg" id="xcardBg">
+  <div class="xcard">
+    <button class="xcard__close" id="xcardClose" aria-label="Close">✕</button>
+    <div class="xcard__gallery" id="xcardGallery"><div class="xcard__img-main"><img id="xcardMainImg" src="" alt=""/></div><div class="xcard__thumbs" id="xcardThumbs"></div></div>
+    <div class="xcard__info" id="xcardInfo">
+      <span class="xcard__series" id="xcardType"></span><h2 class="xcard__name" id="xcardName"></h2>
+      <p class="xcard__price" id="xcardPrice"></p><p class="xcard__desc" id="xcardDesc"></p>
+      <div class="xcard__rule"></div>
+      <ul class="xcard__perks"><li>— Heavyweight premium cotton</li><li>— Vibrant, durable print</li><li>— Ships worldwide via Printful</li></ul>
+      <a class="xcard__buy" id="xcardBuy" href="#" target="_blank" rel="noopener">Buy This →</a>
+      <p class="xcard__note">Secure checkout on Printful</p>
+    </div>
+    <div class="xcard__mobile" id="xcardMobile">
+      <div class="xcard__swiper" id="xcardSwiper"></div><div class="xcard__dots" id="xcardDots"></div>
+      <div class="xcard__overlay">
+        <span class="xcard__ov-series" id="xcardOvType"></span>
+        <div class="xcard__ov-header"><h2 class="xcard__ov-name" id="xcardOvName"></h2><span class="xcard__ov-price" id="xcardOvPrice"></span></div>
+        <p class="xcard__ov-desc" id="xcardOvDesc"></p>
+        <a class="xcard__ov-btn" id="xcardOvBuy" href="#" target="_blank" rel="noopener">Buy Now →</a>
+        <p class="xcard__ov-note">Ships worldwide · Secure checkout</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script>
+(async () => {
+  await loadProducts();
+  initShared();
+  document.querySelector('.nav__links a[href="browse.html"]')?.classList.add('active');
+
+  let activeFilter = 'all';
+
+  // ── BUILD FILTERS ──
+  const filterWrap = document.getElementById('filterBtns');
+  ['all', ...Object.keys(TYPES)].forEach(key => {
+    const btn = document.createElement('button');
+    btn.className = 'browse-filter' + (key === 'all' ? ' active' : '');
+    btn.textContent = key === 'all' ? 'All' : TYPES[key].label;
+    btn.dataset.filter = key;
+    btn.addEventListener('click', () => {
+      activeFilter = key;
+      filterWrap.querySelectorAll('.browse-filter').forEach(b => b.classList.toggle('active', b.dataset.filter === key));
+      renderGrid();
+    });
+    filterWrap.appendChild(btn);
+  });
+
+  // ── RENDER GRID ──
+  function renderGrid() {
+    const filtered = activeFilter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.type === activeFilter);
+    const grid = document.getElementById('browseGrid');
+    const count = document.getElementById('browseCount');
+
+    count.textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''}`;
+    grid.innerHTML = '';
+
+    if (!filtered.length) {
+      grid.innerHTML = `<div class="browse-empty">No products found.</div>`;
+      return;
+    }
+
+    filtered.forEach((p, i) => {
+      const imgs = (p.imgs || []).filter(Boolean);
+      const cover = imgs[0] || '';
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.animationDelay = `${i * 0.05}s`;
+      card.innerHTML = `
+        <div class="card__img${!cover ? ' card__img--missing' : ''}">
+          ${cover ? `<img src="${cover}" alt="${p.name}" loading="lazy" onerror="this.closest('.card__img').classList.add('card__img--missing');this.style.display='none'"/>` : ''}
+          <div class="card__missing-msg">No image<br/><em>${p.id}</em></div>
+          <div class="card__hover-hint"><span>View Details</span></div>
+          <span class="card__chip">${typeLabel(p.type)}</span>
+          ${p.new ? `<span class="card__new-badge">New</span>` : ''}
+        </div>
+        <div class="card__info">
+          <h3 class="card__name">${p.name}</h3>
+          <div class="card__foot">
+            <span class="card__price">${p.price}</span>
+            <span class="card__cta">Tap to explore</span>
+          </div>
+        </div>`;
+      card.addEventListener('click', () => openXCard(p, imgs));
+      grid.appendChild(card);
+    });
+  }
+
+  renderGrid();
+})();
+</script>
+</body>
+</html>

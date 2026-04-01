@@ -1,453 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Triggerfish — Merch</title>
-  <link rel="stylesheet" href="stylesheet.css" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Triggerfish — Work In The Valley Of Death</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@700;800&family=Outfit:wght@300;400;500&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="stylesheet.css"/>
   <style>
+    /* ── LOADING ── */
     #loadingOverlay {
-      position: fixed; inset: 0; z-index: 2000;
-      background: #0a0d0a;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 18px;
-      transition: opacity .5s ease;
+      position: fixed; inset: 0; z-index: 9000;
+      background: #060606;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+      transition: opacity .6s ease;
     }
     #loadingOverlay.fade-out { opacity: 0; pointer-events: none; }
-    .loading__text {
-      font-family: 'Roboto Mono', monospace;
-      font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
-      color: #3d7a3d;
-    }
-    .loading__logo {
-      width: 48px; height: 48px; object-fit: contain;
-      filter: invert(1) brightness(0.75) sepia(1) hue-rotate(60deg) saturate(2);
-      animation: loadPulse 1.4s ease-in-out infinite;
-    }
     @keyframes loadPulse {
-      0%, 100% { opacity: 0.5; transform: scale(0.92); }
-      50%       { opacity: 1;   transform: scale(1.08); }
+      0%,100% { opacity: .28; transform: scale(.88); }
+      50%      { opacity: .85; transform: scale(1.05); }
+    }
+
+    html, body { height: 100%; }
+
+    /* ══════════════════
+       HERO
+    ══════════════════ */
+    .home-hero {
+      min-height: 100svh;
+      padding-top: 68px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      background: var(--bg);
+    }
+
+    /* subtle bg texture */
+    .home-hero__grid {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        linear-gradient(rgba(107,121,48,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(107,121,48,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 120% 100% at 50% 50%, black 10%, transparent 100%);
+    }
+    .home-hero__scan {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.03) 3px, rgba(0,0,0,.03) 4px);
+    }
+
+    /* ── CENTER: TEXT ── */
+    .home-hero__text {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center;
+      padding: clamp(40px, 6vw, 72px) clamp(16px, 4vw, 48px) 0;
+      width: 100%;
+    }
+    .home-hero__kicker {
+      font-family: var(--mono); font-size: 9px; letter-spacing: .4em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 12px;
+      animation: fadeUp .6s ease .1s both;
+    }
+    .home-hero__title {
+      font-family: var(--display);
+      font-size: clamp(64px, 14vw, 200px);
+      letter-spacing: .04em; line-height: .88;
+      color: var(--cream);
+      margin-bottom: 16px;
+      animation: fadeUp .6s ease .18s both;
+    }
+    .home-hero__accent { color: var(--red); }
+    .home-hero__slogan {
+      font-family: var(--mono); font-size: clamp(8px, 1vw, 10px);
+      letter-spacing: .38em; text-transform: uppercase;
+      color: rgba(237,229,214,.18);
+      margin-bottom: 28px;
+      animation: fadeUp .6s ease .28s both;
+    }
+    .home-hero__cta {
+      margin-bottom: 40px;
+      animation: fadeUp .6s ease .38s both;
+    }
+
+    /* ── SHIRTS: 3-across centered row rising from bottom ── */
+    .home-hero__cards {
+      position: relative; z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: flex-end;
+      width: 100%;
+      max-width: 960px;
+      padding: 0 clamp(16px, 4vw, 48px);
+      gap: clamp(8px, 1.5vw, 18px);
+      animation: fadeUp .65s ease .22s both;
+    }
+
+    .hero-shirt {
+      border-radius: 4px 4px 0 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      background: var(--bg2);
+      cursor: pointer;
+      transition: transform .25s ease, border-color .2s ease, box-shadow .25s ease;
+      position: relative;
+    }
+    /* stagger heights — middle shirt taller */
+    .hero-shirt:nth-child(1) { transform: translateY(24px); }
+    .hero-shirt:nth-child(2) { transform: translateY(0px); }
+    .hero-shirt:nth-child(3) { transform: translateY(36px); }
+
+    .hero-shirt:hover {
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 -16px 48px rgba(0,0,0,.5);
+      transform: translateY(-8px) !important;
+    }
+    .hero-shirt:nth-child(2):hover { transform: translateY(-12px) !important; }
+
+    .hero-shirt__img {
+      width: 100%; aspect-ratio: 3/4; overflow: hidden; background: var(--bg3);
+    }
+    .hero-shirt__img img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .35s ease;
+    }
+    .hero-shirt:hover .hero-shirt__img img { transform: scale(1.04); }
+
+    .hero-shirt__foot {
+      padding: 10px 12px 12px;
+      border-top: 1px solid var(--border);
+      background: var(--bg2);
+    }
+    .hero-shirt__name {
+      font-family: var(--display); font-size: 15px; letter-spacing: .04em;
+      color: rgba(237,229,214,.75); line-height: 1; margin-bottom: 3px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .hero-shirt__price {
+      font-family: var(--mono); font-size: 9px; color: var(--muted);
+    }
+    .hero-shirt__new {
+      position: absolute; top: 8px; left: 8px;
+      font-family: var(--mono); font-size: 7px; letter-spacing: .14em;
+      text-transform: uppercase; background: var(--red); color: #d8dfb0;
+      padding: 3px 7px; border-radius: 1px; z-index: 2;
+    }
+
+    /* ══════════════════
+       TICKER
+    ══════════════════ */
+    .home-ticker {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ══════════════════
+       PRODUCT SECTIONS
+    ══════════════════ */
+    .home-section {
+      padding: clamp(40px, 6vw, 72px) clamp(22px, 5vw, 64px);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .home-section--alt { background: var(--bg2); }
+
+    .home-section__head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 24px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .home-section__eyebrow {
+      font-family: var(--mono); font-size: 9px; letter-spacing: .32em;
+      text-transform: uppercase; color: var(--red);
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 5px;
+    }
+    .home-section__eyebrow::before {
+      content: ''; display: inline-block; width: 14px; height: 1px; background: var(--red);
+    }
+    .home-section__title {
+      font-family: var(--display); font-size: clamp(26px, 3.5vw, 44px);
+      letter-spacing: .06em; color: var(--text); line-height: 1;
+    }
+    .home-section__link {
+      font-family: var(--mono); font-size: 9px; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--muted);
+      border-bottom: 1px solid transparent;
+      transition: color .16s ease, border-color .16s ease;
+      white-space: nowrap; padding-bottom: 2px;
+    }
+    .home-section__link:hover { color: var(--cream); border-bottom-color: var(--border-a); }
+
+    /* card grid */
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 10px;
+    }
+
+    /* reuse .card from stylesheet */
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .home-hero__text { padding: 40px 20px 0; }
+      .home-hero__cards { max-width: 100%; padding: 0 12px; gap: 8px; }
+      .hero-shirt:nth-child(1) { transform: translateY(20px); }
+      .hero-shirt:nth-child(2) { transform: translateY(0); }
+      .hero-shirt:nth-child(3) { transform: translateY(28px); }
+      .home-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 8px; }
+    }
+
+    @media (max-width: 500px) {
+      .home-hero__title { font-size: clamp(52px, 18vw, 80px); }
+      .home-hero__cards { gap: 6px; padding: 0 8px; }
+      .home-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet" />
 </head>
-
 <body>
 
-  <div id="loadingOverlay">
-    <span class="loading__text">TriggerFish</span>
-    <img src="logo.png" alt="" class="loading__logo" />
+<div id="loadingOverlay">
+  <img src="logo.png" alt="" style="width:42px;height:42px;object-fit:contain;filter:invert(1) brightness(0.4);animation:loadPulse 1.9s ease-in-out infinite"/>
+  <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:rgba(237,229,214,.2)">Work in the valley of death</span>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav__left">
+    <a class="nav__brand" href="index.html">
+      <img src="logo.png" alt="Triggerfish" class="nav__logo"/>
+      <span class="nav__wordmark">TRIGGERFISH</span>
+    </a>
+  </div>
+  <ul class="nav__links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="browse.html">Browse</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <button class="nav__hamburger" id="navHamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<nav class="nav__drawer" id="navDrawer" aria-label="Mobile navigation">
+  <div class="nav__drawer-inner">
+    <a class="nav__drawer-link" href="index.html">Home</a>
+    <a class="nav__drawer-link" href="browse.html">Browse</a>
+    <a class="nav__drawer-link" href="about.html">About</a>
+  </div>
+  <div class="nav__drawer-foot">© 2026 Triggerfish · Ships worldwide</div>
+</nav>
+
+<!-- HERO -->
+<section class="home-hero">
+  <div class="home-hero__grid"></div>
+  <div class="home-hero__scan"></div>
+
+  <div class="home-hero__text">
+    <p class="home-hero__kicker">Biblical Streetwear</p>
+    <h1 class="home-hero__title">TRIGGER<span class="home-hero__accent">FISH</span></h1>
+    <p class="home-hero__slogan">Work in the valley of death</p>
+    <div class="home-hero__cta">
+      <a href="browse.html" class="btn btn--primary">Shop Now</a>
+    </div>
   </div>
 
-  <nav class="nav" id="nav">
-    <a href="#home" class="nav__brand">
-      <img src="logo.png" alt="Triggerfish" class="nav__logo" />
-      <span class="nav__name">TRIGGERFISH</span>
-    </a>
-    <ul class="nav__links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#shop">Shop</a></li>
-    </ul>
-  </nav>
+  <!-- 3 shirt cards rising from bottom — populated by JS -->
+  <div class="home-hero__cards" id="heroCards"></div>
+</section>
 
-  <section class="hero" id="home">
-    <div class="tank-vignette"></div>
-    <div class="tank" id="tank">
-      <div class="caustics" id="caustics"></div>
-    </div>
-    <div class="hero__content" id="heroContent">
-      <p class="hero__kicker">Official Merch</p>
-      <h1 class="hero__title">TRIGGERFISH</h1>
-      <p class="hero__sub">Gear for the ones who move different.</p>
-      <a href="#shop" class="btn btn--primary">Browse the Store</a>
-    </div>
-  </section>
-
+<!-- TICKER -->
+<div class="home-ticker">
   <div class="ticker">
     <div class="ticker__track">
-      <span>Triggerfish</span><span class="sep">/</span>
-      <span></span><span class="sep">/</span>
-      <span></span><span class="sep">/</span>
-      <span>Official Merch</span><span class="sep">/</span>
-      <span>Triggerfish</span><span class="sep">/</span>
-      <span></span><span class="sep">/</span>
-      <span></span><span class="sep">/</span>
-      <span>Official Merch</span><span class="sep">/</span>
+      <span>Triggerfish</span><span class="sep">✦</span><span>Work in the Valley of Death</span><span class="sep">✦</span>
+      <span>Heavyweight Cotton</span><span class="sep">✦</span><span>Rooted In Scripture</span><span class="sep">✦</span>
+      <span>Ships Worldwide</span><span class="sep">✦</span><span>Triggerfish</span><span class="sep">✦</span>
+      <span>Work in the Valley of Death</span><span class="sep">✦</span><span>Heavyweight Cotton</span><span class="sep">✦</span>
+      <span>Rooted In Scripture</span><span class="sep">✦</span><span>Ships Worldwide</span><span class="sep">✦</span>
     </div>
   </div>
+</div>
 
-  <section class="shop" id="shop">
-    <div class="shop__head">
-      <h2 class="shop__title">THE STORE</h2>
-      <div class="series-tabs" id="seriesTabs"></div>
+<!-- NEW ARRIVALS -->
+<section class="home-section">
+  <div class="home-section__head">
+    <div>
+      <p class="home-section__eyebrow">Just Dropped</p>
+      <h2 class="home-section__title">NEW ARRIVALS</h2>
     </div>
-    <div class="series-strip">
-      <div class="series-strip__left">
-        <span class="series-strip__name" id="stripName">All Products</span>
-        <span class="series-strip__desc" id="stripDesc">Everything in the store.</span>
-      </div>
-      <div class="series-strip__count"><span id="stripCount">0</span> pieces</div>
+    <a class="home-section__link" href="browse.html">View All →</a>
+  </div>
+  <div class="home-grid" id="newGrid"></div>
+</section>
+
+<!-- BEST SELLERS -->
+<section class="home-section home-section--alt">
+  <div class="home-section__head">
+    <div>
+      <p class="home-section__eyebrow">Fan Favorites</p>
+      <h2 class="home-section__title">BEST SELLERS</h2>
     </div>
-    <div class="grid" id="grid"></div>
-  </section>
+    <a class="home-section__link" href="browse.html">Browse All →</a>
+  </div>
+  <div class="home-grid" id="bestGrid"></div>
+</section>
 
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__brand">
-        <img src="logo.png" alt="Triggerfish" class="footer__logo" />
-        <span class="footer__name">TRIGGERFISH</span>
-      </div>
-      <div class="footer__links">
-        <a href="#home">Home</a>
-      </div>
+<!-- EXPANDED CARD -->
+<div class="xcard-bg" id="xcardBg">
+  <div class="xcard">
+    <button class="xcard__close" id="xcardClose" aria-label="Close">✕</button>
+    <div class="xcard__gallery" id="xcardGallery"><div class="xcard__img-main"><img id="xcardMainImg" src="" alt=""/></div><div class="xcard__thumbs" id="xcardThumbs"></div></div>
+    <div class="xcard__info" id="xcardInfo">
+      <span class="xcard__series" id="xcardType"></span><h2 class="xcard__name" id="xcardName"></h2>
+      <p class="xcard__price" id="xcardPrice"></p><p class="xcard__desc" id="xcardDesc"></p>
+      <div class="xcard__rule"></div>
+      <ul class="xcard__perks"><li>— Heavyweight premium cotton</li><li>— Vibrant, durable print</li><li>— Ships worldwide via Printful</li></ul>
+      <a class="xcard__buy" id="xcardBuy" href="#" target="_blank" rel="noopener">Buy This →</a>
+      <p class="xcard__note">Secure checkout on Printful</p>
     </div>
-    <div class="footer__base">
-      <span>© 2026 Triggerfish. All rights reserved.</span>
-    </div>
-  </footer>
-
-  <!-- ── Expanded Card Overlay ── -->
-  <div class="xcard-bg" id="xcardBg">
-    <div class="xcard" id="xcard">
-
-      <button class="xcard__close" id="xcardClose" aria-label="Close">✕</button>
-
-      <!-- DESKTOP layout -->
-      <div class="xcard__gallery" id="xcardGallery">
-        <div class="xcard__img-main">
-          <img id="xcardMainImg" src="" alt="" />
-        </div>
-        <div class="xcard__thumbs" id="xcardThumbs"></div>
+    <div class="xcard__mobile" id="xcardMobile">
+      <div class="xcard__swiper" id="xcardSwiper"></div><div class="xcard__dots" id="xcardDots"></div>
+      <div class="xcard__overlay">
+        <span class="xcard__ov-series" id="xcardOvType"></span>
+        <div class="xcard__ov-header"><h2 class="xcard__ov-name" id="xcardOvName"></h2><span class="xcard__ov-price" id="xcardOvPrice"></span></div>
+        <p class="xcard__ov-desc" id="xcardOvDesc"></p>
+        <a class="xcard__ov-btn" id="xcardOvBuy" href="#" target="_blank" rel="noopener">Buy Now →</a>
+        <p class="xcard__ov-note">Ships worldwide · Secure checkout</p>
       </div>
-      <div class="xcard__info" id="xcardInfo">
-        <span class="xcard__series" id="xcardSeries"></span>
-        <h2 class="xcard__name" id="xcardName"></h2>
-        <p class="xcard__price" id="xcardPrice"></p>
-        <p class="xcard__desc" id="xcardDesc"></p>
-        <div class="xcard__rule"></div>
-        <ul class="xcard__perks">
-          <li>— Heavyweight premium cotton</li>
-          <li>— Vibrant, durable print</li>
-          <li>— Ships worldwide via Printful</li>
-        </ul>
-        <a class="btn btn--primary btn--full xcard__buy" id="xcardBuy" href="#" target="_blank" rel="noopener">
-          Buy This Shirt →
-        </a>
-        <p class="xcard__note">Secure checkout on Printful</p>
-      </div>
-
-      <!-- MOBILE layout -->
-      <div class="xcard__mobile" id="xcardMobile">
-        <div class="xcard__swiper" id="xcardSwiper"></div>
-        <div class="xcard__dots" id="xcardDots"></div>
-        <div class="xcard__overlay">
-          <span class="xcard__ov-series" id="xcardOvSeries"></span>
-          <div class="xcard__ov-header">
-            <h2 class="xcard__ov-name" id="xcardOvName"></h2>
-            <span class="xcard__ov-price" id="xcardOvPrice"></span>
-          </div>
-          <p class="xcard__ov-desc" id="xcardOvDesc"></p>
-          <a class="xcard__ov-btn" id="xcardOvBuy" href="#" target="_blank" rel="noopener">
-            Buy Now →
-          </a>
-          <p class="xcard__ov-note">Ships worldwide · Secure checkout</p>
-        </div>
-      </div>
-
     </div>
   </div>
+</div>
 
-  <script>
+<script src="shared.js"></script>
+<script>
+(async () => {
+  await loadProducts();
+  initShared();
 
-    // ─────────────────────────────────────────────────────────────
-    //  THIS FILE NEVER NEEDS TO BE EDITED.
-    //  To add / change shirts, edit products.json only.
-    // ─────────────────────────────────────────────────────────────
+  // ── HERO SHIRT CARDS (show new arrivals, fallback to first 3) ──
+  const heroProds = PRODUCTS.filter(p => p.new).slice(0, 3);
+  const fallback  = heroProds.length < 3 ? PRODUCTS.slice(0, 3 - heroProds.length) : [];
+  const heroList  = [...heroProds, ...fallback].slice(0, 3);
 
-    let SERIES   = {};
-    let PRODUCTS = [];
+  heroList.forEach(p => {
+    const imgs = (p.imgs || []).filter(Boolean);
+    const card = document.createElement('div');
+    card.className = 'hero-shirt';
+    card.innerHTML = `
+      <div class="hero-shirt__img">
+        ${imgs[0] ? `<img src="${imgs[0]}" alt="${p.name}" loading="eager"/>` : ''}
+      </div>
+      ${p.new ? `<span class="hero-shirt__new">New</span>` : ''}
+      <div class="hero-shirt__foot">
+        <div class="hero-shirt__name">${p.name}</div>
+        <div class="hero-shirt__price">${p.price}</div>
+      </div>`;
+    card.addEventListener('click', () => openXCard(p, imgs));
+    document.getElementById('heroCards').appendChild(card);
+  });
 
-    /* ── Tabs ── */
-    function buildTabs() {
-      const used   = [...new Set(PRODUCTS.map(p => p.series))];
-      const tabsEl = document.getElementById("seriesTabs");
-      let html = `<button class="stab active" data-series="all">All</button>`;
-      used.forEach(key => {
-        if (SERIES[key]) html += `<button class="stab" data-series="${key}"><span class="stab__dot"></span>${SERIES[key].label}</button>`;
-      });
-      tabsEl.innerHTML = html;
-      tabsEl.addEventListener("click", e => {
-        const t = e.target.closest(".stab");
-        if (!t) return;
-        document.querySelectorAll(".stab").forEach(s => s.classList.remove("active"));
-        t.classList.add("active");
-        active = t.dataset.series;
-        renderGrid();
-      });
-    }
-
-    /* ── Grid ── */
-    let active = "all";
-    function filtered() {
-      return active === "all" ? PRODUCTS : PRODUCTS.filter(p => p.series === active);
-    }
-    function renderGrid() {
-      const g        = document.getElementById("grid");
-      const products = filtered();
-      const info     = active === "all"
-        ? { label: "All Products", desc: "Everything in the store." }
-        : (SERIES[active] || { label: active, desc: "" });
-      document.getElementById("stripName").textContent  = info.label;
-      document.getElementById("stripDesc").textContent  = info.desc;
-      document.getElementById("stripCount").textContent = products.length;
-      g.innerHTML = "";
-      products.forEach((p, i) => {
-        const imgs     = (p.imgs || []).filter(Boolean);
-        const coverSrc = imgs.length ? imgs[0] : "";
-        const card     = document.createElement("div");
-        card.className = "card";
-        card.style.animationDelay = `${i * 0.07}s`;
-        card.innerHTML = `
-          <div class="card__img">
-            ${coverSrc ? `<img src="${coverSrc}" alt="${p.name}" loading="lazy" onerror="this.closest('.card__img').classList.add('card__img--missing');this.style.display='none'"/>` : ""}
-            <div class="card__missing-msg">No images found.<br/>Check the <em>products/${p.id}/</em> folder.</div>
-            <div class="card__hover-hint"><span>View Details</span></div>
-            <span class="card__chip">${SERIES[p.series] ? SERIES[p.series].label : p.series}</span>
+  // ── SECTION GRIDS ──
+  function makeGrid(id, products) {
+    const g = document.getElementById(id);
+    if (!g) return;
+    products.forEach((p, i) => {
+      const imgs = (p.imgs || []).filter(Boolean);
+      const cover = imgs[0] || '';
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.animationDelay = `${i * 0.06}s`;
+      card.innerHTML = `
+        <div class="card__img${!cover ? ' card__img--missing' : ''}">
+          ${cover ? `<img src="${cover}" alt="${p.name}" loading="lazy" onerror="this.closest('.card__img').classList.add('card__img--missing');this.style.display='none'"/>` : ''}
+          <div class="card__missing-msg">No image<br/><em>${p.id}</em></div>
+          <div class="card__hover-hint"><span>View Details</span></div>
+          <span class="card__chip">${typeLabel(p.type)}</span>
+          ${p.new ? `<span class="card__new-badge">New</span>` : ''}
+        </div>
+        <div class="card__info">
+          <h3 class="card__name">${p.name}</h3>
+          <div class="card__foot">
+            <span class="card__price">${p.price}</span>
+            <span class="card__cta">Tap to explore</span>
           </div>
-          <div class="card__info">
-            <h3 class="card__name">${p.name}</h3>
-            <div class="card__foot">
-              <span class="card__price">${p.price}</span>
-              <span class="card__cta-hint">Tap to explore</span>
-            </div>
-          </div>`;
-        if (!coverSrc) card.querySelector(".card__img").classList.add("card__img--missing");
-        card.addEventListener("click", () => openXCard(p, imgs));
-        g.appendChild(card);
-      });
-    }
-
-    /* ── Expanded Card ── */
-    let currentImgs = [], currentImgIndex = 0;
-    const isMobile  = () => window.innerWidth <= 600;
-
-    function openXCard(p, imgs) {
-      currentImgs = imgs || []; currentImgIndex = 0;
-
-      if (isMobile()) {
-        document.getElementById("xcardGallery").style.display = "none";
-        document.getElementById("xcardInfo").style.display    = "none";
-        document.getElementById("xcardMobile").style.display  = "flex";
-
-        document.getElementById("xcardOvSeries").textContent = SERIES[p.series] ? SERIES[p.series].label : p.series;
-        document.getElementById("xcardOvName").textContent   = p.name;
-        document.getElementById("xcardOvPrice").textContent  = p.price;
-        document.getElementById("xcardOvDesc").textContent   = p.desc;
-        document.getElementById("xcardOvBuy").href           = p.url;
-
-        const swiper = document.getElementById("xcardSwiper");
-        swiper.innerHTML = "";
-        (currentImgs.length ? currentImgs : [""]).forEach(src => {
-          const slide = document.createElement("div");
-          slide.className = "xcard__swiper-slide";
-          if (src) {
-            const img = document.createElement("img");
-            img.src = src; img.alt = "";
-            slide.appendChild(img);
-          }
-          swiper.appendChild(slide);
-        });
-
-        const dotsEl = document.getElementById("xcardDots");
-        dotsEl.innerHTML = "";
-        if (currentImgs.length > 1) {
-          currentImgs.forEach((_, i) => {
-            const d = document.createElement("span");
-            d.className = "xcard__dot" + (i === 0 ? " active" : "");
-            dotsEl.appendChild(d);
-          });
-          dotsEl.style.display = "flex";
-          let scrollTimer;
-          swiper.addEventListener("scroll", () => {
-            clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(() => {
-              const idx = Math.round(swiper.scrollLeft / swiper.offsetWidth);
-              currentImgIndex = idx;
-              dotsEl.querySelectorAll(".xcard__dot").forEach((d, i) => d.classList.toggle("active", i === idx));
-            }, 50);
-          }, { passive: true });
-        } else {
-          dotsEl.style.display = "none";
-        }
-
-      } else {
-        document.getElementById("xcardGallery").style.display = "";
-        document.getElementById("xcardInfo").style.display    = "";
-        document.getElementById("xcardMobile").style.display  = "none";
-
-        document.getElementById("xcardName").textContent   = p.name;
-        document.getElementById("xcardPrice").textContent  = p.price;
-        document.getElementById("xcardDesc").textContent   = p.desc;
-        document.getElementById("xcardSeries").textContent = SERIES[p.series] ? SERIES[p.series].label : p.series;
-        document.getElementById("xcardBuy").href           = p.url;
-        setMainImg(0);
-
-        const thumbsEl = document.getElementById("xcardThumbs");
-        thumbsEl.innerHTML = "";
-        if (currentImgs.length > 1) {
-          thumbsEl.style.display = "flex";
-          currentImgs.forEach((src, idx) => {
-            const t = document.createElement("div");
-            t.className = "xcard__thumb" + (idx === 0 ? " active" : "");
-            t.innerHTML = `<img src="${src}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"/>`;
-            t.addEventListener("click", e => { e.stopPropagation(); setMainImg(idx); });
-            thumbsEl.appendChild(t);
-          });
-        } else {
-          thumbsEl.style.display = "none";
-        }
-      }
-
-      document.getElementById("xcardBg").classList.add("open");
-      document.body.style.overflow = "hidden";
-    }
-
-    function setMainImg(idx) {
-      currentImgIndex = idx;
-      const el = document.getElementById("xcardMainImg");
-      el.style.opacity = "0";
-      setTimeout(() => { el.src = currentImgs[idx] || ""; el.style.opacity = "1"; }, 150);
-      document.querySelectorAll(".xcard__thumb").forEach((t, i) => t.classList.toggle("active", i === idx));
-    }
-
-    function closeXCard() {
-      document.getElementById("xcardBg").classList.remove("open");
-      document.body.style.overflow = "";
-    }
-
-    document.getElementById("xcardClose").addEventListener("click", e => { e.stopPropagation(); closeXCard(); });
-    document.getElementById("xcardBg").addEventListener("click", e => { if (e.target === e.currentTarget) closeXCard(); });
-
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape") closeXCard();
-      if (!isMobile()) {
-        if (e.key === "ArrowRight" && currentImgs.length > 1) setMainImg((currentImgIndex + 1) % currentImgs.length);
-        if (e.key === "ArrowLeft"  && currentImgs.length > 1) setMainImg((currentImgIndex - 1 + currentImgs.length) % currentImgs.length);
-      }
+        </div>`;
+      card.addEventListener('click', () => openXCard(p, imgs));
+      g.appendChild(card);
     });
+  }
 
-    let touchStartX = 0;
-    document.getElementById("xcardMainImg").addEventListener("touchstart", e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-    document.getElementById("xcardMainImg").addEventListener("touchend",   e => {
-      const diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40 && currentImgs.length > 1)
-        setMainImg(diff > 0
-          ? (currentImgIndex + 1) % currentImgs.length
-          : (currentImgIndex - 1 + currentImgs.length) % currentImgs.length);
-    }, { passive: true });
+  makeGrid('newGrid', PRODUCTS.filter(p => p.new));
 
-    /* ── Nav scroll ── */
-    window.addEventListener("scroll", () => {
-      document.getElementById("nav").classList.toggle("scrolled", window.scrollY > 40);
-    });
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener("click", e => {
-        const t = document.querySelector(a.getAttribute("href"));
-        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: "smooth" }); }
-      });
-    });
-
-    /* ── Fish Tank ── */
-    (function initTank() {
-      const tank   = document.getElementById("tank");
-      const DEPTHS = [
-        { scale: 0.15, opacity: 0.08, speed: 22, blur: 4   },
-        { scale: 0.28, opacity: 0.13, speed: 16, blur: 2.5 },
-        { scale: 0.50, opacity: 0.20, speed: 12, blur: 1.5 },
-        { scale: 0.78, opacity: 0.28, speed:  8, blur: 0.5 },
-        { scale: 1.10, opacity: 0.38, speed:  5, blur: 0   },
-        { scale: 1.55, opacity: 0.50, speed:  4, blur: 0   },
-      ];
-      function pickDepth() {
-        const r = Math.random();
-        if (r < 0.12) return DEPTHS[5];
-        if (r < 0.22) return DEPTHS[0];
-        return DEPTHS[Math.floor(Math.random() * DEPTHS.length)];
-      }
-      const fish = document.createElement("img");
-      fish.src = "Logo-straight.png"; fish.alt = ""; fish.className = "tank__fish";
-      tank.appendChild(fish);
-      const BASE_W = 240;
-      let goingRight = Math.random() > 0.5;
-      function swim() {
-        const d = pickDepth(), heroW = tank.offsetWidth;
-        const w = Math.round(BASE_W * d.scale), dur = d.speed * 1000;
-        const yPct   = 8 + Math.random() * 78;
-        const yDrift = (Math.random() - 0.5) * 12;
-        const startX = goingRight ? -w - 20 : heroW + 20;
-        const endX   = goingRight ? heroW + 20 : -w - 20;
-        fish.style.cssText = `width:${w}px;opacity:${d.opacity};top:${yPct}%;left:${startX}px;filter:invert(1) brightness(0.65) sepia(1) hue-rotate(60deg) saturate(2) blur(${d.blur}px);transform:scaleX(${goingRight ? 1 : -1});transition:none;`;
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          fish.style.transition = `left ${dur}ms linear,top ${dur * .6}ms ease-in-out,opacity 1400ms ease,width 1400ms ease,filter 1400ms ease`;
-          fish.style.left = endX + "px";
-          fish.style.top  = `${Math.min(Math.max(yPct + yDrift, 5), 90)}%`;
-        }));
-        setTimeout(() => { goingRight = !goingRight; swim(); }, dur + 100);
-      }
-      setTimeout(swim, 500);
-      const caustics = document.getElementById("caustics");
-      for (let i = 0; i < 9; i++) {
-        const c  = document.createElement("div");
-        c.className = "caustic";
-        const sz = 70 + Math.random() * 220;
-        c.style.cssText = `width:${sz}px;height:${sz * .42}px;left:${Math.random() * 100}%;top:${Math.random() * 100}%;animation-delay:${Math.random() * 9}s;animation-duration:${7 + Math.random() * 7}s;`;
-        caustics.appendChild(c);
-      }
-      const heroContent = document.getElementById("heroContent");
-      let tx = 0, ty = 0, cx = 0, cy = 0;
-      const heroEl = document.getElementById("home");
-      heroEl.addEventListener("mousemove", e => {
-        const r = e.currentTarget.getBoundingClientRect();
-        tx = (e.clientX - r.left) / r.width - .5;
-        ty = (e.clientY - r.top)  / r.height - .5;
-      });
-      heroEl.addEventListener("mouseleave", () => { tx = 0; ty = 0; });
-      if (window.DeviceOrientationEvent) {
-        window.addEventListener("deviceorientation", e => {
-          if (e.gamma !== null) {
-            tx = Math.max(-.5, Math.min(.5, e.gamma / 30));
-            ty = Math.max(-.5, Math.min(.5, (e.beta - 45) / 30));
-          }
-        });
-      }
-      (function lerp() {
-        const ease = 0.055; cx += (tx - cx) * ease; cy += (ty - cy) * ease;
-        tank.style.transform        = `translate(${cx * -30}px,${cy * -15}px)`;
-        heroContent.style.transform = `translate(${cx * 10}px,${cy * 6}px)`;
-        requestAnimationFrame(lerp);
-      })();
-    })();
-
-    /* ── Boot: fetch products.json, then build the page ── */
-    (async () => {
-      try {
-        const data = await fetch("products.json").then(r => r.json());
-        SERIES   = data.series;
-        PRODUCTS = data.products;
-      } catch (e) {
-        console.error("Failed to load products.json:", e);
-      }
-      buildTabs();
-      renderGrid();
-      const overlay = document.getElementById("loadingOverlay");
-      overlay.classList.add("fade-out");
-      setTimeout(() => overlay.remove(), 600);
-    })();
-
-  </script>
+  const best = PRODUCTS.filter(p => !p.new);
+  makeGrid('bestGrid', best.length ? best : PRODUCTS.slice(0, 4));
+})();
+</script>
 </body>
 </html>
