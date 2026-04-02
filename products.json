@@ -117,6 +117,42 @@
     },
 
     {
+      "id":    "jawbone-hoodie",
+      "type":  "hoodie",
+      "name":  "Jawbone Hoodie",
+      "price": "$54.00",
+      "desc":  "Judges 15 — in hoodie form. Midweight fleece, drop shoulder.",
+      "new":   true,
+      "url":   "https://www.printful.com/product-template/100638195/30fc45304568b8fda9a5b9ef186eb6af",
+      "imgs": [
+        "products/jawbone-hoodie/Hoodie 1.png",  "products/jawbone-hoodie/Hoodie 2.png",
+        "products/jawbone-hoodie/Hoodie 3.png",  "products/jawbone-hoodie/Hoodie 4.png",
+        "products/jawbone-hoodie/Hoodie 5.png",  "products/jawbone-hoodie/Hoodie 6.png",
+        "products/jawbone-hoodie/Hoodie 7.png",  "products/jawbone-hoodie/Hoodie 8.png"
+      ]
+    },
+
+    {
+      "id":    "valley-shirt",
+      "type":  "tee",
+      "name":  "Work in the Valley",
+      "price": "$28.00",
+      "desc":  "Not a tagline. A posture. For those who show up anyway.",
+      "new":   true,
+      "url":   "https://www.printful.com/product-template/100914867/9950efc02da400fac3fe4ca16def471b",
+      "imgs": [
+        "products/valley-shirt/Shirt 1.png",  "products/valley-shirt/Shirt 2.png",
+        "products/valley-shirt/Shirt 3.png",  "products/valley-shirt/Shirt 4.png",
+        "products/valley-shirt/Shirt 5.png",  "products/valley-shirt/Shirt 6.png",
+        "products/valley-shirt/Shirt 7.png",  "products/valley-shirt/Shirt 8.png",
+        "products/valley-shirt/Shirt 9.png",  "products/valley-shirt/Shirt 10.png",
+        "products/valley-shirt/Shirt 11.png", "products/valley-shirt/Shirt 12.png",
+        "products/valley-shirt/Shirt 13.png", "products/valley-shirt/Shirt 14.png",
+        "products/valley-shirt/Shirt 15.png", "products/valley-shirt/Shirt 16.png"
+      ]
+    },
+
+    {
       "id":    "valley-hoodie",
       "type":  "hoodie",
       "name":  "Valley Hoodie",
